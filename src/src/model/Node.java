@@ -1,11 +1,17 @@
 package model;
 
 public class Node<K,V> {
-
     private V value;
     private K key;
     private Node<K,V> next;
     private Node<K,V> prev;
+    public Node(K key, V value ) {
+        this.key = key;
+        this.value = value;
+    }
+    public Node<K, V> getPrev() {
+        return prev;
+    }
 
     public V getValue() {
         return value;
@@ -31,16 +37,8 @@ public class Node<K,V> {
         this.next = next;
     }
 
-    public Node<K, V> getPrev() {
-        return prev;
-    }
-
     public void setPrev(Node<K, V> prev) {
         this.prev = prev;
     }
 
-    public Node(K key, V value ) {
-        this.key = key;
-        this.value = value;
-    }
 }

@@ -1,13 +1,16 @@
 package ui;
+import model.Date;
+import model.Agenda;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class Main {
     private BufferedReader reader;
+    private Agenda controller;
 
     public Main() {
+        controller = new Agenda();
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
     public static void main(String[] args) {
@@ -32,13 +35,11 @@ public class Main {
 
 
     private void menu() throws IOException {
-
         System.out.println("Welcome to the TASK AND REMINDER APP");
         System.out.println("******************************************************************");
+        boolean flag = false;
 
-        boolean flag=false;
-
-        while (!flag){
+        while (!flag) {
 
             System.out.println("Please, select option do you want to do: ");
 
@@ -51,12 +52,11 @@ public class Main {
             System.out.println("7. Undo method");
             System.out.println("0. Salir");
 
-            int optionMenu = reader.read();
+            String optionMenuStr = reader.readLine();
 
-            switch (optionMenu){
-                default:
-                    System.out.println("Index out of bounds, please type another one");
-                    break;
+            int optionMenu = Integer.parseInt(optionMenuStr);
+
+            switch (optionMenu) {
                 case 1:
                     addTask();
                     break;
@@ -79,15 +79,36 @@ public class Main {
                     undoMethod();
                     break;
                 case 0:
-                    flag=true;
+                    flag = true;
                     reader.close();
                     break;
             }
         }
     }
 
-    private void addTask(){
-
+    private void addTask() throws IOException{
+        boolean flag = true;
+        String title = "Default_Title";
+        while (flag) {
+            System.out.println("Introduce task´s title");
+            title = reader.readLine();
+            if (title.length() > 30) {
+                System.out.println("Task title must be less than 30 characters");
+            } else {
+                flag = false;
+            }
+        }
+        System.out.println("Introduce task´s description: ");
+        String description = reader.readLine();
+        System.out.println("Introduce task date (DD/MM/YYYY format): ");
+        String dayStr = reader.readLine();
+        int day = Integer.parseInt(dayStr);
+        String monthStr = reader.readLine();
+        int month = Integer.parseInt(monthStr);
+        String yearStr = reader.readLine();
+        int year = Integer.parseInt(yearStr);
+        Date date = new Date(day,month,year);
+        System.out.println(controller.addTasks(title, description, date));
     }
 
     private void modifyTask(){
@@ -98,8 +119,29 @@ public class Main {
 
     }
 
-    private void addReminder(){
-
+    private void addReminder() throws IOException{
+        boolean flag = true;
+        String title = "Default_Title";
+        while (flag) {
+            System.out.println("Introduce reminder´s title");
+            title = reader.readLine();
+            if (title.length() > 30) {
+                System.out.println("Reminder title must be less than 30 characters");
+            } else {
+                flag = false;
+            }
+        }
+        System.out.println("Introduce reminder´s description: ");
+        String description = reader.readLine();
+        System.out.println("Introduce reminder date (DD/MM/YYYY format): ");
+        String dayStr = reader.readLine();
+        int day = Integer.parseInt(dayStr);
+        String monthStr = reader.readLine();
+        int month = Integer.parseInt(monthStr);
+        String yearStr = reader.readLine();
+        int year = Integer.parseInt(yearStr);
+        Date date = new Date(day,month,year);
+        System.out.println(controller.addReminder(title, description, date));
     }
 
     private void modifyReminder(){
@@ -114,7 +156,4 @@ public class Main {
     private void undoMethod(){
 
     }
-
-
-
 }
