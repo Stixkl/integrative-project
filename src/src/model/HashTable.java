@@ -4,11 +4,11 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
     private int size;
     private int elements;
-    private Node<K,V>[] table;
+    private HashNode<K,V>[] table;
 
     public HashTable(int capacity){
         this.size = 0;
-        this.table = new Node[1000];
+        this.table = new HashNode[1000];
     }
 
     @Override
@@ -19,27 +19,27 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
         int hash = hashFunction(key);
 
-        Node<K,V> newNode = new Node<>(key,value);
+        HashNode<K,V> newHashNode = new HashNode<>(key,value);
 
         if(this.table[hash]==null){
-            table[hash] = newNode;
+            table[hash] = newHashNode;
             this.size++;
             return true;
         }else if(table[hash] != null && table[hash].getNext() == null){
-            table[hash].setNext(new Node<>(key,value));
-            newNode.setPrev(table[hash]);
+            table[hash].setNext(new HashNode<>(key,value));
+            newHashNode.setPrev(table[hash]);
             this.size++;
             return true;
         }else{
-            Node<K,V> pointer = LastNodeAmpliar(table[hash]);
-            pointer.setNext(newNode);
-            newNode.setPrev(pointer);
+            HashNode<K,V> pointer = LastNodeAmpliar(table[hash]);
+            pointer.setNext(newHashNode);
+            newHashNode.setPrev(pointer);
             this.size++;
             return true;
         }
     }
 
-    private Node<K,V> LastNodeAmpliar(Node<K,V> pointer){
+    private HashNode<K,V> LastNodeAmpliar(HashNode<K,V> pointer){
 
         if(pointer.getNext() == null){
             return pointer;

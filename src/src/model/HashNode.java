@@ -1,15 +1,15 @@
 package model;
 
-public class Node<K,V> {
+public class HashNode<K,V> {
     private V value;
     private K key;
-    private Node<K,V> next;
-    private Node<K,V> prev;
-    public Node(K key, V value ) {
+    private HashNode<K,V> next;
+    private HashNode<K,V> prev;
+    public HashNode(K key, V value ) {
         this.key = key;
         this.value = value;
     }
-    public Node<K, V> getPrev() {
+    public HashNode<K, V> getPrev() {
         return prev;
     }
 
@@ -29,15 +29,15 @@ public class Node<K,V> {
         this.key = key;
     }
 
-    public Node<K, V> getNext() {
+    public HashNode<K, V> getNext() {
         return next;
     }
 
-    public void setNext(Node<K, V> next) {
+    public void setNext(HashNode<K, V> next) {
         this.next = next;
     }
 
-    public void setPrev(Node<K, V> prev) {
+    public void setPrev(HashNode<K, V> prev) {
         this.prev = prev;
     }
 
