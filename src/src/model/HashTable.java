@@ -31,7 +31,7 @@ public class HashTable<K,V> implements IHashTable<K,V>{
             this.size++;
             return true;
         }else{
-            HashNode<K,V> pointer = LastNodeAmpliar(table[hash]);
+            HashNode<K,V> pointer = LastNodeExtend(table[hash]);
             pointer.setNext(newHashNode);
             newHashNode.setPrev(pointer);
             this.size++;
@@ -39,27 +39,86 @@ public class HashTable<K,V> implements IHashTable<K,V>{
         }
     }
 
-    private HashNode<K,V> LastNodeAmpliar(HashNode<K,V> pointer){
-
+    private HashNode<K,V> LastNodeExtend(HashNode<K,V> pointer){
         if(pointer.getNext() == null){
             return pointer;
         }else{
-            return LastNodeAmpliar(pointer.getNext());
+            return LastNodeExtend(pointer.getNext());
         }
     }
 
     @Override
     public V search(K key) {
-        return null;
+
+        int position = this.hashFunction(key);
+
+        HashNode<K,V> pointer = table[position];
+        boolean flag = true;
+        if (pointer != null) {
+            while(flag){
+                if(pointer.getKey().equals(key)){
+                    flag = false;
+                }
+                if(flag){
+                    pointer = pointer.getNext();
+                    if(pointer == null){
+                        flag = false;
+                    }
+                }
+            }
+        }
+        if (pointer == null) {
+            return null;
+        } else {
+            return pointer.getValue();
+        }
+    }
+
+    public HashNode searchNode(K key) {
+
+        int position = this.hashFunction(key);
+
+        HashNode<K,V> pointer = table[position];
+        boolean flag = true;
+        if (pointer != null) {
+            while(flag){
+                if(pointer.getKey().equals(key)){
+                    flag = false;
+                }
+
+                if(flag){
+                    pointer = pointer.getNext();
+                    if(pointer == null){
+                        flag = false;
+                    }
+                }
+            }
+        }
+        return pointer;
     }
 
     @Override
-    public void delete(K key) {
+    public boolean delete(K key) {
+        int position = this.hashFunction(key);
 
+        HashNode<K,V> pointer = searchNode(key);
+
+        if(pointer != null){
+            if(pointer == table[position]){
+                table[position] = pointer.getNext();
+            }else{
+                HashNode<K,V> toReplace = pointer.getPrev();
+                pointer.getNext().setPrev(toReplace);
+                toReplace.setNext(pointer.getNext());
+            }
+            size--;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public int hashFunction(K key) {
-        return 0;
+        return key.hashCode() % 100;
     }
 }
