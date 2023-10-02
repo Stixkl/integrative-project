@@ -105,10 +105,27 @@ public class Main {
         } else{
             System.out.println("Task not added");
         }
+        System.out.println("Select task priority: ");
+        System.out.println("1. High priority");
+        System.out.println("2. Priority");
+        System.out.println("3. Least priority");
+        System.out.println("4. No priority");
+        String optionPriority = reader.readLine();
+        int optionPri = Integer.parseInt(optionPriority);
     }
 
-    private void modifyTask(){
+    private void modifyTask() throws IOException {
+
+        System.out.println("This is the task list in priority order: ");
+        System.out.println("Introduce the number of the task you want to modify: ");
+
         System.out.println(controller.printTaskList());
+        String typeModify1 = reader.readLine();
+        int typeModify2 = Integer.parseInt(typeModify1);
+
+
+
+
     }
 
     private void deleteTask(){

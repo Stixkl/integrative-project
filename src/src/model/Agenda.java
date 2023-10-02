@@ -27,7 +27,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return table.insert(taskNode.getKey(), task);
     }
 
-    public void inserctionSortProfe() {
+    public void insertionSortNoPriority() {
         for (int i = 0; i < taskList.size() ; i++) {
             int j = i-1;
             Task current = taskList.get(i);
@@ -37,7 +37,6 @@ public class Agenda<K,V, T extends  Comparable<T>> {
             }
             taskList.set(j+1, current);
         }
-
     }
 
     public String printTaskList() {
@@ -47,6 +46,14 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
         return msg;
     }
+    public String printTaskListAtributtes() {
+        String msg = "";
+        for (int i = 0; i < taskList.size(); i++) {
+            msg += i+1+"." + taskList.get(i).getTitle() + "\n";
+        }
+        return msg;
+    }
+
     public boolean addReminder(String title, String description, Date date) {
         boolean flag = false;
 
@@ -55,6 +62,10 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
     public boolean modifyTask() {
         boolean flag = false;
+
+
+
+
         return flag;
     }
 
