@@ -1,9 +1,12 @@
 package ui;
 import model.Date;
 import model.Agenda;
+import model.Task;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Main {
     private BufferedReader reader;
@@ -14,17 +17,6 @@ public class Main {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
     public static void main(String[] args) {
-        /*
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            System.out.print("Por favor, introduce una línea de texto: ");
-            String linea = br.readLine();
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
         Main m = new Main();
         try {
             m.menu();
@@ -108,11 +100,15 @@ public class Main {
         String yearStr = reader.readLine();
         int year = Integer.parseInt(yearStr);
         Date date = new Date(day,month,year);
-        System.out.println(controller.addTasks(title, description, date));
+        if(controller.addTasks(title, description, date)){
+            System.out.println("Task added successfully");
+        } else{
+            System.out.println("Task not added");
+        }
     }
 
     private void modifyTask(){
-
+        System.out.println(controller.printTaskList());
     }
 
     private void deleteTask(){

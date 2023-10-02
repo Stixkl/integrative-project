@@ -8,7 +8,7 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
     public HashTable(int capacity){
         this.size = 0;
-        this.table = new HashNode[1000];
+        this.table = new HashNode[999];
     }
 
     @Override
@@ -119,6 +119,6 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
     @Override
     public int hashFunction(K key) {
-        return key.hashCode() % 100;
+        return key.hashCode() % 999;
     }
 }

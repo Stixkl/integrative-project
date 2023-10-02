@@ -3,6 +3,7 @@ import model.HashTable;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class HashTableTest {
 
@@ -14,13 +15,36 @@ public class HashTableTest {
 
 
     @Test
-    public void testInsert(){
+    public void HashTestInsert(){
         // SetUp test
         setUp1();
 
         // Act
         boolean flag = hashTable.insert(null, null);
 
+        // assert
+        assertEquals(false,flag);
+    }
+
+    @Test
+    public void HashTestInsert2(){
+        // SetUp test
+        setUp1();
+
+        // Act
+        boolean flag = hashTable.insert(1, "Hola");
+
+        // assert
+        assertEquals(true,flag);
+    }
+
+    @Test
+    public void HashTestInsert3(){
+        // SetUp test
+        setUp1();
+
+        // Act
+        boolean flag = hashTable.insert(1, null);
         // assert
         assertEquals(false,flag);
     }

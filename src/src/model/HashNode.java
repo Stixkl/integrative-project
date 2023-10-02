@@ -21,7 +21,7 @@ public class HashNode<K,V> {
         this.value = value;
     }
 
-    public String getKey() {
+    public K getKey() {
         return key;
     }
 

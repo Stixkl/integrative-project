@@ -5,15 +5,11 @@ public class Stack<K,V> implements IStack<V> {
     private ElementNode<V> top;
 
     public Stack() {
-
         ElementNode<V> elementNode = new ElementNode<V>(null);
-
     }
 
     @Override
-
     public void push( V value){
-
         ElementNode<V> elementNode = new ElementNode<V>( value);
         if(top==null){ // lista vacia
             top= elementNode;
@@ -21,15 +17,10 @@ public class Stack<K,V> implements IStack<V> {
             elementNode.setNext(top);
             top= elementNode;
         }
-
     }
-
     @Override
-
     public V pop(){
-
         ElementNode<V> currentPointer = top;
-
         if (currentPointer != null){
             top = currentPointer.getNext();
             return currentPointer.getValue();
@@ -37,13 +28,8 @@ public class Stack<K,V> implements IStack<V> {
         else {
             return null;
         }
-
-
-
     }
-
     @Override
-
     public V getTop(){
         return this.top.getValue();
     }

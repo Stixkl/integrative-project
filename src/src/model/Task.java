@@ -1,6 +1,6 @@
 package model;
 
-public class Task {
+public class Task implements Comparable<Task> {
     private String title;
     private String description;
     private Date date;
@@ -32,5 +32,10 @@ public class Task {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(Task o) {
+        return 0;
     }
 }
