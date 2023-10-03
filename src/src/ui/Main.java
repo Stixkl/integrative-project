@@ -92,6 +92,15 @@ public class Main {
         }
         System.out.println("Introduce task´s description: ");
         String description = reader.readLine();
+
+        System.out.println("Select task priority: ");
+        System.out.println("1. High priority");
+        System.out.println("2. Priority");
+        System.out.println("3. Least priority");
+        System.out.println("4. No priority");
+        String optionPriority = reader.readLine();
+        int optionPri = Integer.parseInt(optionPriority);
+
         System.out.println("Introduce task date (DD/MM/YYYY format): ");
         String dayStr = reader.readLine();
         int day = Integer.parseInt(dayStr);
@@ -105,13 +114,7 @@ public class Main {
         } else{
             System.out.println("Task not added");
         }
-        System.out.println("Select task priority: ");
-        System.out.println("1. High priority");
-        System.out.println("2. Priority");
-        System.out.println("3. Least priority");
-        System.out.println("4. No priority");
-        String optionPriority = reader.readLine();
-        int optionPri = Integer.parseInt(optionPriority);
+
     }
 
     private void modifyTask() throws IOException {
