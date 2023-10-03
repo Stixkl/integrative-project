@@ -11,8 +11,8 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     public Agenda(){
         table = new HashTable<Integer, Task>(999);
         taskList = new ArrayList<Task>();
-    }
 
+    }
 
     public String printHashTable(){
         String msg = "";
@@ -60,11 +60,32 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return flag;
     }
 
-    public boolean modifyTask() {
+    public boolean modifyTask(String title, String description, Date date, int option, int key) {
         boolean flag = false;
 
+        int position = table.hashFunction(key);
 
+        switch (option){
 
+            case 1:
+
+                ((Task)table.searchNode(position).getValue()).setTitle(title);
+
+                break;
+
+            case 2:
+
+                ((Task)table.searchNode(position).getValue()).setDescription(description);
+
+                break;
+
+            case 3:
+
+                ((Task)table.searchNode(position).getValue()).setDate(date);
+
+                break;
+
+        }
 
         return flag;
     }

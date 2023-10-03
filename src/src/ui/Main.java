@@ -122,9 +122,62 @@ public class Main {
         System.out.println("This is the task list in priority order: ");
         System.out.println("Introduce the number of the task you want to modify: ");
 
-        System.out.println(controller.printTaskList());
+        System.out.println("Insert the key");
+
         String typeModify1 = reader.readLine();
         int typeModify2 = Integer.parseInt(typeModify1);
+
+        System.out.println("Insert what you want to modify");
+        System.out.println("1. Title");
+        System.out.println("2. Description");
+        System.out.println("3: Date");
+
+        String optionString = reader.readLine();
+        int option = Integer.parseInt(optionString);
+
+        switch (option){
+            case 1:
+
+                System.out.println("Insert the new title");
+                String newTitle = reader.readLine();
+
+                controller.modifyTask(newTitle,null,null, option, typeModify2);
+
+                break;
+
+            case 2:
+
+                System.out.println("Insert the new description");
+                String newDescription = reader.readLine();
+
+                controller.modifyTask(null,newDescription,null, option, typeModify2);
+
+                break;
+
+            case 3:
+
+                System.out.println("Insert the new date");
+
+                System.out.println("Insert the day (dd)");
+                String newDay = reader.readLine();
+                int day = Integer.parseInt(newDay);
+
+                System.out.println("Insert the month (mm)");
+                String newMonth = reader.readLine();
+                int month = Integer.parseInt(newMonth);
+
+                System.out.println("Insert the year (yyyy)");
+                String newYear = reader.readLine();
+                int year = Integer.parseInt(newYear);
+
+                Date date = new Date(day,month,year);
+
+                controller.modifyTask(null,null,date, option, typeModify2);
+
+
+            default:
+                System.out.println("Ingrese un numero del 1 al 3");
+        }
 
 
 

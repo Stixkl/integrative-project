@@ -7,8 +7,8 @@ public class HashTable<K,V> implements IHashTable<K,V>{
     private HashNode<K,V>[] table;
 
     public HashTable(int capacity){
-        this.size = 0;
-        this.table = new HashNode[999];
+        this.size = 1;
+        this.table = new HashNode[size];
     }
 
     @Override
@@ -105,7 +105,7 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
         if(pointer != null){
             if(pointer == table[position]){
-                table[position] = pointer.getNext();
+                table[position] = pointer.getNext(); // corregir
             }else{
                 HashNode<K,V> toReplace = pointer.getPrev();
                 pointer.getNext().setPrev(toReplace);
@@ -119,6 +119,6 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
     @Override
     public int hashFunction(K key) {
-        return key.hashCode() % 999;
+        return key.hashCode() % size;
     }
 }
