@@ -141,7 +141,7 @@ public class Main {
                 System.out.println("Insert the new title");
                 String newTitle = reader.readLine();
 
-                controller.modifyTask(newTitle,null,null, option, typeModify2);
+                controller.modifyTask(newTitle,null,null, option, typeModify2-1);
 
                 break;
 
@@ -150,7 +150,7 @@ public class Main {
                 System.out.println("Insert the new description");
                 String newDescription = reader.readLine();
 
-                controller.modifyTask(null,newDescription,null, option, typeModify2);
+                controller.modifyTask(null,newDescription,null, option, typeModify2-1);
 
                 break;
 
@@ -172,7 +172,7 @@ public class Main {
 
                 Date date = new Date(day,month,year);
 
-                controller.modifyTask(null,null,date, option, typeModify2);
+                controller.modifyTask(null,null,date, option, typeModify2-1);
 
 
             default:

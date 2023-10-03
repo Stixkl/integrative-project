@@ -65,25 +65,29 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
         int position = table.hashFunction(key);
 
-        switch (option){
+        if (table.searchNode(position).getValue() != null){
 
-            case 1:
+            switch (option){
 
-                ((Task)table.searchNode(position).getValue()).setTitle(title);
+                case 1:
 
-                break;
+                    ((Task)table.searchNode(position).getValue()).setTitle(title);
 
-            case 2:
+                    break;
 
-                ((Task)table.searchNode(position).getValue()).setDescription(description);
+                case 2:
 
-                break;
+                    ((Task)table.searchNode(position).getValue()).setDescription(description);
 
-            case 3:
+                    break;
 
-                ((Task)table.searchNode(position).getValue()).setDate(date);
+                case 3:
 
-                break;
+                    ((Task)table.searchNode(position).getValue()).setDate(date);
+
+                    break;
+
+            }
 
         }
 
