@@ -109,7 +109,7 @@ public class Main {
         String yearStr = reader.readLine();
         int year = Integer.parseInt(yearStr);
         Date date = new Date(day,month,year);
-        if(controller.addTasks(title, description, date)){
+        if(controller.addTasks(title, description, date, optionPri)){
             System.out.println("Task added successfully");
         } else{
             System.out.println("Task not added");

@@ -4,13 +4,18 @@ import java.util.ArrayList;
 
 public class Agenda<K,V, T extends  Comparable<T>> {
     private HashTable<Integer,Task> table;
+    private Queue<Task> nonPriorityTasks;
+    private Heap<Task> priorityTasks;
     private int keyGlobal = 1;
     private ArrayList<Task> taskList;
 
 
     public Agenda(){
         table = new HashTable<Integer, Task>(999);
-        taskList = new ArrayList<Task>();
+        taskList = new ArrayList<Task>(); //esto para que es
+        nonPriorityTasks = new Queue<Task>();
+        priorityTasks = new Heap<Task>();
+
 
     }
 
@@ -19,11 +24,19 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         msg= ""+table.searchNode(1);
         return msg;
     }
-    public boolean addTasks(String title, String description, Date date) {
-        Task task = new Task(title, description, date);
+
+
+    public boolean addTasks(String title, String description, Date date, int priority) {
+        Task task = new Task(keyGlobal,title, description, date,priority);
+        if(priority==4){
+            nonPriorityTasks.enqueue(task);
+        }else{
+            priorityTasks.insert(priority, task);
+        }
         HashNode<Integer,Task> taskNode = (HashNode<Integer, Task>) new HashNode<Integer, Task>(keyGlobal, task);
         keyGlobal++;
         taskList.add(task);
+        // falta que se agregue al stack de undo
         return table.insert(taskNode.getKey(), task);
     }
 
