@@ -1,12 +1,21 @@
 package model;
 
+import exceptions.ListIsNullException;
+
 public interface IStack<V> {
 
-    public void push( V value);
+    boolean push(V value);
 
-    public V pop();
+    V pop() throws ListIsNullException;
 
-    public V getTop();
+    V Top();
+
+    int size();
+
+    boolean isEmpty();
+
+
+
 
 
 

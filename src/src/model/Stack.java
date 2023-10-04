@@ -1,40 +1,62 @@
 package model;
 
+import exceptions.ListIsNullException;
+
 public class Stack<K,V> implements IStack<V> {
 
     private ElementNode<V> top;
 
+    private int size =0;
+
     public Stack() {
-        ElementNode<V> elementNode = new ElementNode<V>(null);
     }
 
     @Override
-    public void push( V value){
-        ElementNode<V> elementNode = new ElementNode<V>( value);
+    public boolean push( V value){
+        ElementNode<V> node = new ElementNode( value);
+        boolean flag = false;
         if(top==null){ // lista vacia
-            top= elementNode;
+            top= node;
+            flag = true;
+            size++;
         } else {
-            elementNode.setNext(top);
-            top= elementNode;
+            node.setNext(top);
+            top= node;
+            flag = true;
+            size++;
         }
+        return flag;
     }
+
     @Override
-    public V pop(){
+    public V pop() throws ListIsNullException {
         ElementNode<V> currentPointer = top;
         if (currentPointer != null){
+            currentPointer = top.getNext();
             top = currentPointer.getNext();
+            size--;
+            if (top != null){
+                top.setPrev(null);
+            }
             return currentPointer.getValue();
         }
         else {
-            return null;
-        }
+            throw new exceptions.ListIsNullException();        }
     }
     @Override
-    public V getTop(){
+    public V Top(){
         return this.top.getValue();
     }
 
+    @Override
+    public int size() {
+        return this.size;
+    }
 
+    @Override
+    public boolean isEmpty() {
+        return top == null;
+    }
 
 
 }

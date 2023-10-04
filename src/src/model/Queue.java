@@ -52,5 +52,8 @@ public class Queue<V> {
     public boolean isEmpty(){
         return front == null;
     }
+    public int size(){
+        return this.size;
+    }
 }
 
