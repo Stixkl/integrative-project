@@ -2,12 +2,14 @@ package model;
 
 public interface IQueue<V> {
 
-    public void enqueue(V element);
+    boolean enqueue(V element);
 
-    public  V dequeue();
+    V dequeue();
 
-    public V front();
+    V front();
 
-    public boolean isEmpty();
+    boolean isEmpty();
+    int size();
+
 
 }
