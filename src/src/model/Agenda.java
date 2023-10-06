@@ -3,25 +3,26 @@ package model;
 import java.util.ArrayList;
 
 public class Agenda<K,V, T extends  Comparable<T>> {
-    private HashTable<Integer,Task> table;
-    private Queue<Task> nonPriorityTasks;
-    private Heap<Task> priorityTasks;
+    private HashTable<Integer,Task> table = new HashTable<Integer, Task>(999);
+    private Queue<Task> nonPriorityTasks = new Queue<Task>();
+    private Heap<Task> priorityTasks = new Heap<Task>();
     private int keyGlobal = 1;
-    private ArrayList<Task> taskList;
-
 
     public Agenda(){
-        table = new HashTable<Integer, Task>(999);
-        taskList = new ArrayList<Task>(); //esto para que es
-        nonPriorityTasks = new Queue<Task>();
-        priorityTasks = new Heap<Task>();
-
-
+        addTasks("tarea1", "descripcion1", new Date(1,1,1), 1);
+        addTasks("tarea2", "descripcion2", new Date(2,2,2), 2);
+        addTasks("tarea3", "descripcion3", new Date(3,3,3), 3);
     }
 
     public String printHashTable(){
         String msg = "";
         msg= ""+table.searchNode(1);
+        return msg;
+    }
+
+    public String printPriorityQueue(){
+        String msg = "";
+        msg= ""+priorityTasks.max();
         return msg;
     }
 
@@ -35,36 +36,8 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
         HashNode<Integer,Task> taskNode = (HashNode<Integer, Task>) new HashNode<Integer, Task>(keyGlobal, task);
         keyGlobal++;
-        taskList.add(task);
         // falta que se agregue al stack de undo
         return table.insert(taskNode.getKey(), task);
-    }
-
-    public void insertionSortNoPriority() {
-        for (int i = 0; i < taskList.size() ; i++) {
-            int j = i-1;
-            Task current = taskList.get(i);
-            while(j>=0 && current.getDate().compareDates(current.getDate(), taskList.get(j).getDate()) < 0){
-                taskList.set(j+1, taskList.get(j));
-                --j;
-            }
-            taskList.set(j+1, current);
-        }
-    }
-
-    public String printTaskList() {
-        String msg = "";
-        for (int i = 0; i < taskList.size(); i++) {
-            msg += i+1+"." + taskList.get(i).getTitle() + "\n";
-        }
-        return msg;
-    }
-    public String printTaskListAtributtes() {
-        String msg = "";
-        for (int i = 0; i < taskList.size(); i++) {
-            msg += i+1+"." + taskList.get(i).getTitle() + "\n";
-        }
-        return msg;
     }
 
     public boolean addReminder(String title, String description, Date date) {
@@ -107,16 +80,6 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return flag;
     }
 
-    public boolean modifyReminder() {
-        boolean flag = false;
-        return flag;
-    }
-
-    public boolean deleteReminder() {
-        boolean flag = false;
-        return flag;
-    }
-
     public boolean deleteTask() {
         boolean flag = false;
         return flag;
@@ -124,7 +87,6 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
     public boolean undoMethod() {
         boolean flag = false;
-
         return flag;
     }
 }

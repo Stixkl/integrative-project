@@ -120,6 +120,7 @@ public class Main {
     private void modifyTask() throws IOException {
 
         System.out.println("This is the task list in priority order: ");
+        System.out.println(controller.printHashTable());
         System.out.println("Introduce the number of the task you want to modify: ");
 
         System.out.println("Insert the key");
