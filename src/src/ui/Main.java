@@ -1,12 +1,10 @@
 package ui;
 import model.Date;
 import model.Agenda;
-import model.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class Main {
     private BufferedReader reader;
@@ -38,10 +36,7 @@ public class Main {
             System.out.println("1. Add Task");
             System.out.println("2. Modify Task");
             System.out.println("3. Delete Task");
-            System.out.println("4. Add Reminder");
-            System.out.println("5. Modify Reminder");
-            System.out.println("6. Delete reminder");
-            System.out.println("7. Undo method");
+            System.out.println("4. Undo method");
             System.out.println("0. Salir");
 
             String optionMenuStr = reader.readLine();
@@ -59,15 +54,6 @@ public class Main {
                     deleteTask();
                     break;
                 case 4:
-                    addReminder();
-                    break;
-                case 5:
-                    modifyReminder();
-                    break;
-                case 6:
-                    deleteReminder();
-                    break;
-                case 7:
                     undoMethod();
                     break;
                 case 0:
@@ -119,70 +105,63 @@ public class Main {
 
     private void modifyTask() throws IOException {
 
-        System.out.println("This is the task list in priority order: ");
-        System.out.println(controller.printHashTable());
-        System.out.println("Introduce the number of the task you want to modify: ");
+        System.out.println("This is the task list: ");
+        System.out.println(controller.printHHH());
 
-        System.out.println("Insert the key");
+        System.out.println("Insert the id of the task you want to modify: ");
 
-        String typeModify1 = reader.readLine();
-        int typeModify2 = Integer.parseInt(typeModify1);
+        String idModifyStr = reader.readLine();
+        int idModifyInt = Integer.parseInt(idModifyStr);
 
         System.out.println("Insert what you want to modify");
         System.out.println("1. Title");
         System.out.println("2. Description");
         System.out.println("3: Date");
+        System.out.println("4. Priority");
 
         String optionString = reader.readLine();
-        int option = Integer.parseInt(optionString);
+        int optionInt = Integer.parseInt(optionString);
 
-        switch (option){
+        switch (optionInt){
             case 1:
-
                 System.out.println("Insert the new title");
                 String newTitle = reader.readLine();
-
-                controller.modifyTask(newTitle,null,null, option, typeModify2-1);
-
+                controller.modifyTask(newTitle,null,null,optionInt,idModifyInt,0);
                 break;
-
             case 2:
-
                 System.out.println("Insert the new description");
                 String newDescription = reader.readLine();
-
-                controller.modifyTask(null,newDescription,null, option, typeModify2-1);
-
+                controller.modifyTask(null,newDescription,null, optionInt, idModifyInt,0);
                 break;
-
             case 3:
-
                 System.out.println("Insert the new date");
 
                 System.out.println("Insert the day (dd)");
                 String newDay = reader.readLine();
                 int day = Integer.parseInt(newDay);
-
                 System.out.println("Insert the month (mm)");
                 String newMonth = reader.readLine();
                 int month = Integer.parseInt(newMonth);
-
                 System.out.println("Insert the year (yyyy)");
                 String newYear = reader.readLine();
                 int year = Integer.parseInt(newYear);
-
                 Date date = new Date(day,month,year);
-
-                controller.modifyTask(null,null,date, option, typeModify2-1);
-
-
+                controller.modifyTask(null,null,date, optionInt, idModifyInt,0);
+                break;
+            case 4:
+                System.out.println("Insert the new priority of the task");
+                System.out.println("1. High priority");
+                System.out.println("2. Priority");
+                System.out.println("3. Least priority");
+                System.out.println("4. No priority");
+                String newPriorityStr = reader.readLine();
+                int newPriorityInt = Integer.parseInt(newPriorityStr);
+                controller.modifyTask(null,null,null,optionInt,idModifyInt,newPriorityInt);
+                break;
             default:
-                System.out.println("Ingrese un numero del 1 al 3");
+                System.out.println("X");
+                break;
         }
-
-
-
-
     }
 
     private void deleteTask(){

@@ -3,14 +3,23 @@ package model;
 public class HashTable<K,V> implements IHashTable<K,V>{
 
     private int size;
-    private int elements;
-    private HashNode<K,V>[] table;
+
+    private final HashNode[] table;
 
     public HashTable(int capacity){
-        this.size = 1;
-        this.table = new HashNode[size];
+        this.size = 0;
+        this.table = new HashNode[capacity];
     }
 
+    public String toString() {
+        String msg = "";
+        for(int i = 0; i < table.length; i++) {
+            if(table[i] != null) {
+                msg += table[i].getValue().toString() + "\n";
+            }
+        }
+        return msg;
+    }
     @Override
     public boolean insert(K key, V value) {
         if(value == null){
@@ -46,10 +55,24 @@ public class HashTable<K,V> implements IHashTable<K,V>{
             return LastNodeExtend(pointer.getNext());
         }
     }
-
+    //
     @Override
     public V search(K key) {
-
+        V pointer = null;
+        int position = hashFunction(key);
+        if (searchNode(key) != null) {
+            if (searchNode(key).getValue() != null) {
+                pointer = searchNode(key).getValue();
+            } else {
+                pointer = null;
+            }
+            if (pointer != null) {
+                return pointer;
+            }
+        }
+        return null;
+    }
+    /*
         int position = this.hashFunction(key);
 
         HashNode<K,V> pointer = table[position];
@@ -72,11 +95,11 @@ public class HashTable<K,V> implements IHashTable<K,V>{
         } else {
             return pointer.getValue();
         }
-    }
 
-    public HashNode searchNode(K key) {
+        ----------
 
-        int position = this.hashFunction(key);
+
+        int position = hashFunction(key);
 
         HashNode<K,V> pointer = table[position];
         boolean flag = true;
@@ -95,7 +118,33 @@ public class HashTable<K,V> implements IHashTable<K,V>{
             }
         }
         return pointer;
+     */
+    public HashNode<K,V> searchNode(K key) {
+        int position = this.hashFunction(key);
+
+        HashNode<K,V> pointer = table[position];
+        boolean flag = true;
+        if (pointer != null) {
+            while(flag){
+                if(pointer.getKey().equals(key)){
+                    flag = false;
+                }
+                if(flag){
+                    pointer = pointer.getNext();
+                    if(pointer == null){
+                        flag = false;
+                    }
+                }
+            }
+        }
+        if (pointer == null) {
+            return null;
+        } else {
+            return pointer;
+        }
     }
+
+
 
     @Override
     public boolean delete(K key) {
@@ -117,8 +166,11 @@ public class HashTable<K,V> implements IHashTable<K,V>{
         return false;
     }
 
+    public int getSize() {
+        return size;
+    }
     @Override
     public int hashFunction(K key) {
-        return key.hashCode() % size;
+        return Math.abs(key.hashCode() % table.length);
     }
 }

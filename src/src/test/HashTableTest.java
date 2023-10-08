@@ -48,5 +48,20 @@ public class HashTableTest {
         // assert
         assertEquals(false,flag);
     }
+
+    @Test
+    public void HashTestInsert4(){
+        // SetUp test
+        setUp1();
+
+        // Act
+        boolean flag = hashTable.insert(1, "Hola");
+        boolean flag2 = hashTable.insert(1, "Hola");
+        // assert
+        assertEquals(true,flag);
+        assertEquals(true,flag2);
+    }
 }
+
+
 

@@ -56,7 +56,13 @@ public class Date {
         }
     }
 
+    public String toString() {
+        return day + "/" + month + "/" + year;
+    }
 
+    public Date clone() {
+        return new Date(day, month, year);
+    }
 
 
 }
