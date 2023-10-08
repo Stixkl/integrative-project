@@ -19,10 +19,11 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     public void buildMaxHeapify() {
-        for(int i= A.size()-1; i >=1;i--){
+        for(int i= A.size()-1; i >= 0;i--){
             maxHeapify(i);
         }
     }
+
     @Override
     public V extractMax() {
         if(A.size() < 1) {

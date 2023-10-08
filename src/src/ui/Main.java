@@ -1,4 +1,6 @@
 package ui;
+import exceptions.IlegalIndexSwitch;
+import exceptions.StructureNullException;
 import model.Date;
 import model.Agenda;
 
@@ -19,19 +21,19 @@ public class Main {
         try {
             m.menu();
         } catch (IOException e) {
-            e.printStackTrace();
+        } catch (StructureNullException e) {
         }
     }
 
 
-    private void menu() throws IOException {
+    private void menu() throws IOException, StructureNullException {
         System.out.println("Welcome to the TASK AND REMINDER APP");
         System.out.println("******************************************************************");
         boolean flag = false;
 
         while (!flag) {
 
-            System.out.println("Please, select option do you want to do: ");
+            System.out.println("Please select which option do you want to do: ");
 
             System.out.println("1. Add Task");
             System.out.println("2. Modify Task");
@@ -64,7 +66,8 @@ public class Main {
         }
     }
 
-    private void addTask() throws IOException{
+    private void addTask() throws IOException, StructureNullException {
+
         boolean flag = true;
         String title = "Default_Title";
         while (flag) {
@@ -80,10 +83,10 @@ public class Main {
         String description = reader.readLine();
 
         System.out.println("Select task priority: ");
-        System.out.println("1. High priority");
+        System.out.println("3. High priority");
         System.out.println("2. Priority");
-        System.out.println("3. Least priority");
-        System.out.println("4. No priority");
+        System.out.println("1. Least priority");
+        System.out.println("0. No priority");
         String optionPriority = reader.readLine();
         int optionPri = Integer.parseInt(optionPriority);
 
@@ -106,7 +109,7 @@ public class Main {
     private void modifyTask() throws IOException {
 
         System.out.println("This is the task list: ");
-        System.out.println(controller.printHHH());
+        System.out.println(controller.printHashTable());
 
         System.out.println("Insert the id of the task you want to modify: ");
 
@@ -122,16 +125,16 @@ public class Main {
         String optionString = reader.readLine();
         int optionInt = Integer.parseInt(optionString);
 
-        switch (optionInt){
+        switch (optionInt) {
             case 1:
                 System.out.println("Insert the new title");
                 String newTitle = reader.readLine();
-                controller.modifyTask(newTitle,null,null,optionInt,idModifyInt,0);
+                controller.modifyTask(newTitle, null, null, optionInt, idModifyInt, 0);
                 break;
             case 2:
                 System.out.println("Insert the new description");
                 String newDescription = reader.readLine();
-                controller.modifyTask(null,newDescription,null, optionInt, idModifyInt,0);
+                controller.modifyTask(null, newDescription, null, optionInt, idModifyInt, 0);
                 break;
             case 3:
                 System.out.println("Insert the new date");
@@ -145,62 +148,35 @@ public class Main {
                 System.out.println("Insert the year (yyyy)");
                 String newYear = reader.readLine();
                 int year = Integer.parseInt(newYear);
-                Date date = new Date(day,month,year);
-                controller.modifyTask(null,null,date, optionInt, idModifyInt,0);
+                Date date = new Date(day, month, year);
+                controller.modifyTask(null, null, date, optionInt, idModifyInt, 0);
                 break;
             case 4:
                 System.out.println("Insert the new priority of the task");
-                System.out.println("1. High priority");
+                System.out.println("3. High priority");
                 System.out.println("2. Priority");
-                System.out.println("3. Least priority");
-                System.out.println("4. No priority");
+                System.out.println("1. Least priority");
+                System.out.println("0. No priority");
                 String newPriorityStr = reader.readLine();
                 int newPriorityInt = Integer.parseInt(newPriorityStr);
-                controller.modifyTask(null,null,null,optionInt,idModifyInt,newPriorityInt);
+                controller.modifyTask(null, null, null, optionInt, idModifyInt, newPriorityInt);
                 break;
             default:
                 System.out.println("X");
                 break;
         }
+        System.out.println("This is the new No priority task list: ");
+        System.out.println(controller.printNoPriorityQueue());
+        System.out.println("This is the new Priority task list: ");
+        controller.getPriorityTasks().buildMaxHeapify();
+        System.out.println(controller.printPriorityHeap());
     }
 
     private void deleteTask(){
 
     }
 
-    private void addReminder() throws IOException{
-        boolean flag = true;
-        String title = "Default_Title";
-        while (flag) {
-            System.out.println("Introduce reminder´s title");
-            title = reader.readLine();
-            if (title.length() > 30) {
-                System.out.println("Reminder title must be less than 30 characters");
-            } else {
-                flag = false;
-            }
-        }
-        System.out.println("Introduce reminder´s description: ");
-        String description = reader.readLine();
-        System.out.println("Introduce reminder date (DD/MM/YYYY format): ");
-        String dayStr = reader.readLine();
-        int day = Integer.parseInt(dayStr);
-        String monthStr = reader.readLine();
-        int month = Integer.parseInt(monthStr);
-        String yearStr = reader.readLine();
-        int year = Integer.parseInt(yearStr);
-        Date date = new Date(day,month,year);
-        System.out.println(controller.addReminder(title, description, date));
-    }
 
-    private void modifyReminder(){
-
-    }
-
-
-    private void deleteReminder(){
-
-    }
 
     private void undoMethod(){
 
