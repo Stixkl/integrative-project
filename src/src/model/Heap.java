@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Heap<V> implements IPriorityHeap<V>{
 
     private ArrayList<NodeHeap<V>> A;
-    private int heapSize;
 
     public Heap() {
         A = new ArrayList<>();
-        heapSize = 0;
+        A.add(null);
     }
 
     @Override
@@ -19,7 +18,7 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     public void buildMaxHeapify() {
-        for(int i= A.size()-1; i >= 0;i--){
+        for(int i= A.size()-1; i >= 1;i--){
             maxHeapify(i);
         }
     }
@@ -45,9 +44,9 @@ public class Heap<V> implements IPriorityHeap<V>{
     public void heapSort(){
         buildMaxHeapify();
         for(int i= A.size()-1; i >=1;i--){
-            exchange(0,i);
-            heapSize--;
+            NodeHeap<V> temp = A.get(0);
             maxHeapify(0);
+            A.set(i,temp);
         }
     }
 
@@ -98,7 +97,6 @@ public class Heap<V> implements IPriorityHeap<V>{
         }
         return false;
     }
-
     private int parent(int index) {
         return index/2;
     }
@@ -116,12 +114,12 @@ public class Heap<V> implements IPriorityHeap<V>{
         int l = 2*index;
         int r = 2*index + 1;
         int largest;
-        if(l <= A.size()-1 && A.get(l).getPriority() > A.get(index).getPriority()) {
+        if((l <= A.size() -1 && A.get(l).getPriority() > A.get(index).getPriority()) && A.get(l)!=null && A.get(index) != null) {
             largest = l;
         } else {
             largest = index;
         }
-        if(r<= A.size()-1 && A.get(r).getPriority()  > A.get(largest).getPriority() ) {
+        if((r <= A.size() - 1 && A.get(r).getPriority()  > A.get(largest).getPriority()) && A.get(r)!=null && A.get(largest) != null) {
             largest = r;
         }
         if(largest != index) {

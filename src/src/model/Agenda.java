@@ -103,6 +103,16 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     }
 
 
+    public boolean removeGeneral(Integer id){
+        boolean flag = false;
+
+        Task task = (Task)table.search(id);
+        flag = true;
+        return flag;
+
+    }
+
+
     public boolean removeNonPriorityTask (Task task) throws ListIsNullException {
         try {
             Queue<Task> temp = new Queue();
@@ -142,5 +152,4 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     public Heap<Task> getPriorityTasks() {
         return priorityTasks;
     }
-
 }

@@ -168,7 +168,7 @@ public class Main {
         System.out.println("This is the new No priority task list: ");
         System.out.println(controller.printNoPriorityQueue());
         System.out.println("This is the new Priority task list: ");
-        controller.getPriorityTasks().buildMaxHeapify();
+        controller.getPriorityTasks().heapSort();
         System.out.println(controller.printPriorityHeap());
     }
 
