@@ -6,7 +6,6 @@ public class Task implements Comparable<Task> {
     private String title;
     private String description;
     private Date date;
-
     private int priority;
 
     public Task(int id, String title, String description, Date date, int priority) {

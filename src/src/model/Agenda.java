@@ -4,6 +4,7 @@ import exceptions.ListIsNullException;
 import exceptions.StructureNullException;
 
 public class Agenda<K,V, T extends  Comparable<T>> {
+
     private HashTable<Integer,Task> table = new HashTable<Integer, Task>(1000);
     private Queue<Task> nonPriorityTasks = new Queue<Task>();
     private Heap<Task> priorityTasks = new Heap<Task>();
@@ -103,13 +104,20 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     }
 
 
-    public boolean removeGeneral(Integer id){
+    public boolean removeGeneral(Integer id) throws ListIsNullException{
         boolean flag = false;
-
         Task task = (Task)table.search(id);
-        flag = true;
+        if (task.getPriority() == 0){
+            try {
+                flag = removeNonPriorityTask(task);
+            } catch (ListIsNullException e){
+                throw new ListIsNullException("The list is empty");
+            }
+        } else {
+            priorityTasks.delete(task);
+            flag = true;
+        }
         return flag;
-
     }
 
 
@@ -136,7 +144,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                 return true;
             }
         } catch (ListIsNullException e) {
-            throw new ListIsNullException();
+            throw new ListIsNullException("The list is empty");
         }
     }
 

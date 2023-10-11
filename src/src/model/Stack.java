@@ -41,7 +41,7 @@ public class Stack<K,V> implements IStack<V> {
             return currentPointer.getValue();
         }
         else {
-            throw new exceptions.ListIsNullException();        }
+            throw new exceptions.ListIsNullException("The list is empty");        }
     }
     @Override
     public V Top(){

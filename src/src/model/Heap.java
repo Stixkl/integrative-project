@@ -88,7 +88,7 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     public boolean delete(V node){
-        for (int i = 0; i < A.size(); i++) {
+        for (int i = 1; i < A.size(); i++) {
             if(A.get(i).getNode().equals(node)){
                 A.remove(i);
                 buildMaxHeapify();
@@ -114,13 +114,14 @@ public class Heap<V> implements IPriorityHeap<V>{
         int l = 2*index;
         int r = 2*index + 1;
         int largest;
-        if((l <= A.size() -1 && A.get(l).getPriority() > A.get(index).getPriority()) && A.get(l)!=null && A.get(index) != null) {
+        if((l <= A.size() - 1 && A.get(l).getPriority() > A.get(index).getPriority()) && A.get(l)!=null && A.get(index) != null) {
             largest = l;
         } else {
             largest = index;
         }
-        if((r <= A.size() - 1 && A.get(r).getPriority()  > A.get(largest).getPriority()) && A.get(r)!=null && A.get(largest) != null) {
-            largest = r;
+        if((r <= A.size() -1 && A.get(r).getPriority()  > A.get(largest).getPriority()) && A.get(r)!=null && A.get(largest) != null) {
+            largest = 0;
+            largest += r;
         }
         if(largest != index) {
             NodeHeap<V> temp1= A.get(index);

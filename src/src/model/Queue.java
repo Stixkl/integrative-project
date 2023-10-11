@@ -41,7 +41,7 @@ public class Queue<V> {
             return frontValue;
 
         } else {
-            throw new ListIsNullException();
+            throw new ListIsNullException("The list is empty");
         }
     }
 

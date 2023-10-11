@@ -1,5 +1,6 @@
 package ui;
 import exceptions.IlegalIndexSwitch;
+import exceptions.ListIsNullException;
 import exceptions.StructureNullException;
 import model.Date;
 import model.Agenda;
@@ -7,6 +8,7 @@ import model.Agenda;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 
 public class Main {
     private BufferedReader reader;
@@ -172,7 +174,25 @@ public class Main {
         System.out.println(controller.printPriorityHeap());
     }
 
-    private void deleteTask(){
+    private void deleteTask() throws  IOException {
+
+        System.out.println("This is the task list: ");
+        System.out.println(controller.printHashTable());
+
+        System.out.println("Insert the id of the task you want to delete: ");
+        String idDeleteStr = reader.readLine();
+        int idDeleteInt = Integer.parseInt(idDeleteStr);
+
+        try {
+            boolean flag = controller.removeGeneral(idDeleteInt);
+            if (flag) {
+                System.out.println("Task removed succesfully");
+            } else {
+                System.out.println("Cannot be removed");
+            }
+        } catch (ListIsNullException e){
+            e.getMessage();
+        }
 
     }
 

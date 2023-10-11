@@ -5,6 +5,7 @@ public class HashNode<K,V> {
     private K key;
     private HashNode<K,V> next;
     private HashNode<K,V> prev;
+
     public HashNode(K key, V value ) {
         this.key = key;
         this.value = value;
