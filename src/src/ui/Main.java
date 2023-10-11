@@ -24,11 +24,12 @@ public class Main {
             m.menu();
         } catch (IOException e) {
         } catch (StructureNullException e) {
+        } catch (ListIsNullException e){
         }
     }
 
 
-    private void menu() throws IOException, StructureNullException {
+    private void menu() throws IOException, StructureNullException, ListIsNullException {
         System.out.println("Welcome to the TASK AND REMINDER APP");
         System.out.println("******************************************************************");
         boolean flag = false;
@@ -110,7 +111,7 @@ public class Main {
 
     private void modifyTask() throws IOException {
 
-        System.out.println("This is the task list: ");
+        System.out.println("This is the new task list in HashTable (no order): ");
         System.out.println(controller.printHashTable());
 
         System.out.println("Insert the id of the task you want to modify: ");
@@ -170,11 +171,11 @@ public class Main {
         System.out.println("This is the new No priority task list: ");
         System.out.println(controller.printNoPriorityQueue());
         System.out.println("This is the new Priority task list: ");
-        controller.getPriorityTasks().heapSort();
+        //controller.getPriorityTasks().heapSort();
         System.out.println(controller.printPriorityHeap());
     }
 
-    private void deleteTask() throws  IOException {
+    private void deleteTask() throws  IOException, ListIsNullException {
 
         System.out.println("This is the task list: ");
         System.out.println(controller.printHashTable());
@@ -183,16 +184,17 @@ public class Main {
         String idDeleteStr = reader.readLine();
         int idDeleteInt = Integer.parseInt(idDeleteStr);
 
+        System.out.println("The task was deleted successfully");
+
         try {
-            boolean flag = controller.removeGeneral(idDeleteInt);
-            if (flag) {
-                System.out.println("Task removed succesfully");
-            } else {
-                System.out.println("Cannot be removed");
-            }
+            controller.removeGeneral(idDeleteInt);
         } catch (ListIsNullException e){
-            e.getMessage();
+            throw new ListIsNullException("The list is empty");
         }
+
+        System.out.println("This is the new task list in HashTable (no order): ");
+        System.out.println(controller.printHashTable());
+
 
     }
 

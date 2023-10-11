@@ -8,7 +8,6 @@ public class Heap<V> implements IPriorityHeap<V>{
 
     public Heap() {
         A = new ArrayList<>();
-        A.add(null);
     }
 
     @Override
@@ -17,12 +16,19 @@ public class Heap<V> implements IPriorityHeap<V>{
         buildMaxHeapify();
     }
 
-    public void buildMaxHeapify() {
-        for(int i= A.size()-1; i >= 1;i--){
-            maxHeapify(i);
-        }
+    public boolean isEmpty() {
+        return A.size() == 0;
     }
-
+    public boolean remove(V value) {
+        for (int i = 0; i < A.size(); i++) {
+            if(A.get(i).getNode().equals(value)){
+                A.remove(i);
+                buildMaxHeapify();
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public V extractMax() {
         if(A.size() < 1) {
@@ -88,10 +94,9 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     public boolean delete(V node){
-        for (int i = 1; i < A.size(); i++) {
+        for (int i = 0; i < A.size(); i++) {
             if(A.get(i).getNode().equals(node)){
                 A.remove(i);
-                buildMaxHeapify();
                 return true;
             }
         }
@@ -101,42 +106,32 @@ public class Heap<V> implements IPriorityHeap<V>{
         return index/2;
     }
 
-    public Heap<V> clone(){
-        Heap<V> clone = new Heap<>();
-        for (int i = 0; i < A.size(); i++) {
-            clone.insert(A.get(i).getPriority(),A.get(i).getNode());
+    public void buildMaxHeapify() {
+        for(int i= A.size()-1; i >= 0;i--){
+            maxHeapify(i);
         }
-        return clone;
     }
 
     public void maxHeapify(int index) {
-
         int l = 2*index;
         int r = 2*index + 1;
-        int largest;
-        if((l <= A.size() - 1 && A.get(l).getPriority() > A.get(index).getPriority()) && A.get(l)!=null && A.get(index) != null) {
-            largest = l;
+        int masGrande;
+        if((l <= A.size() - 1 && A.get(l).getPriority() > A.get(index).getPriority())) {
+            masGrande = l;
         } else {
-            largest = index;
+            masGrande = index;
         }
-        if((r <= A.size() -1 && A.get(r).getPriority()  > A.get(largest).getPriority()) && A.get(r)!=null && A.get(largest) != null) {
-            largest = 0;
-            largest += r;
+        if((r <= A.size() -1 && A.get(r).getPriority()  > A.get(masGrande).getPriority())) {
+            masGrande = r;
         }
-        if(largest != index) {
+        if(masGrande != index) {
             NodeHeap<V> temp1= A.get(index);
-            NodeHeap<V> temp2= A.get(largest);
+            NodeHeap<V> temp2= A.get(masGrande);
             A.set(index,temp2);
-            A.set(largest,temp1);
-            maxHeapify(largest);
+            A.set(masGrande,temp1);
+            maxHeapify(masGrande);
         }
     }
 
-    private void exchange(int i, int largest) {
-        NodeHeap<V> temp1= A.get(i);
-        NodeHeap<V> temp2= A.get(largest);
-        A.set(i,temp2);
-        A.set(largest,temp1);
-    }
 
 }

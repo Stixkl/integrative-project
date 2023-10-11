@@ -154,7 +154,7 @@ public class HashTable<K,V> implements IHashTable<K,V>{
 
         if(pointer != null){
             if(pointer == table[position]){
-                table[position] = pointer.getNext(); // corregir
+                table[position] = pointer.getNext();
             }else{
                 HashNode<K,V> toReplace = pointer.getPrev();
                 pointer.getNext().setPrev(toReplace);
@@ -173,6 +173,11 @@ public class HashTable<K,V> implements IHashTable<K,V>{
     public int hashFunction(K key) {
         return Math.abs(key.hashCode() % table.length);
     }
+
+
+
+
+
 
 
 }

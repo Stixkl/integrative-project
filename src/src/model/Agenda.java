@@ -78,38 +78,30 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                             return false;
                         }
                     } else {
-                        priorityTasks.delete((Task) table.searchNode(position).getValue());
+                        priorityTasks.delete((Task) table.searchNode(position).getValue()); // aca se esta haciendo el metodo delete de priorityTasks ESTA MALOOOOO
 
                     }
                     if (priority == 0) {
                         nonPriorityTasks.enqueue((Task) table.searchNode(position).getValue());
                     } else {
-                        priorityTasks.insert(priority, (Task) table.searchNode(position).getValue());
+                        priorityTasks.insert(priority,(Task) table.searchNode(position).getValue());
                     }
                     flag = true;
-
                     break;
-                // Cambiar de queue a heap
-                // Cambiar de heap a queue
-                // Eliminar donde estaba
-                // Agregar donde va
-                //verifique si esta dentro de priority o nonpriority y lo elimine de ahi y lo agregue al otro
             }
             priorityTasks.buildMaxHeapify();
-
-
         }
-
         return flag;
     }
 
 
-    public boolean removeGeneral(Integer id) throws ListIsNullException{
+    public boolean removeGeneral(int id) throws ListIsNullException{
         boolean flag = false;
         Task task = (Task)table.search(id);
+        table.delete(id);
         if (task.getPriority() == 0){
             try {
-                flag = removeNonPriorityTask(task);
+                removeNonPriorityTask(task);
             } catch (ListIsNullException e){
                 throw new ListIsNullException("The list is empty");
             }
@@ -120,33 +112,33 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return flag;
     }
 
-
     public boolean removeNonPriorityTask (Task task) throws ListIsNullException {
+        boolean flag = false;
         try {
             Queue<Task> temp = new Queue();
-
             while (!this.nonPriorityTasks.isEmpty()) {
                 Task tempElement = (Task) nonPriorityTasks.dequeue();
                 if (!tempElement.equals(task)) {
                     temp.enqueue(tempElement);
                 }
             }
-
             if (temp.size() == nonPriorityTasks.size()) {
-                return false;
+                return flag;
             } else {
                 int newsize = temp.size();
-
                 for (int i = 0; i < newsize; ++i) {
                     this.nonPriorityTasks.enqueue((Task) temp.dequeue());
                 }
-
-                return true;
+                flag = true;
+                return flag;
             }
         } catch (ListIsNullException e) {
             throw new ListIsNullException("The list is empty");
         }
     }
+
+
+
 
     public boolean undoMethod () {
         boolean flag = false;
