@@ -39,7 +39,6 @@ public class Queue<V> {
                 front.setPrev(null);
             }
             return frontValue;
-
         } else {
             throw new ListIsNullException("The list is empty");
         }

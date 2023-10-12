@@ -19,9 +19,10 @@ public class Heap<V> implements IPriorityHeap<V>{
     public boolean isEmpty() {
         return A.size() == 0;
     }
-    public boolean remove(V value) {
+
+    public boolean remove(V node) {
         for (int i = 0; i < A.size(); i++) {
-            if(A.get(i).getNode().equals(value)){
+            if(A.get(i).getNode().equals(node)){
                 A.remove(i);
                 buildMaxHeapify();
                 return true;
@@ -29,9 +30,10 @@ public class Heap<V> implements IPriorityHeap<V>{
         }
         return false;
     }
+
     @Override
     public V extractMax() {
-        if(A.size() < 1) {
+        if(A.isEmpty()) {
             // Aqui va la excepcion en lugar de imprimir
             System.out.println("heap underflow");
         }
@@ -93,15 +95,6 @@ public class Heap<V> implements IPriorityHeap<V>{
         return null;
     }
 
-    public boolean delete(V node){
-        for (int i = 0; i < A.size(); i++) {
-            if(A.get(i).getNode().equals(node)){
-                A.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
     private int parent(int index) {
         return index/2;
     }

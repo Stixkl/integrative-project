@@ -42,6 +42,9 @@ public class Main {
             System.out.println("2. Modify Task");
             System.out.println("3. Delete Task");
             System.out.println("4. Undo method");
+            System.out.println("5. Print Priority Task");
+            System.out.println("6. Print No Priority Task");
+            System.out.println("7. Print Hash Table");
             System.out.println("0. Salir");
 
             String optionMenuStr = reader.readLine();
@@ -60,6 +63,15 @@ public class Main {
                     break;
                 case 4:
                     undoMethod();
+                    break;
+                case 5:
+                    printPriory();
+                    break;
+                case 6:
+                    printNoPriory();
+                    break;
+                case 7:
+                    printHash();
                     break;
                 case 0:
                     flag = true;
@@ -107,6 +119,18 @@ public class Main {
             System.out.println("Task not added");
         }
 
+    }
+
+    private void printPriory(){
+        System.out.println(controller.printPriorityHeap());
+    }
+
+    private void printNoPriory(){
+        System.out.println(controller.printNoPriorityQueue());
+    }
+
+    private void printHash(){
+        System.out.println(controller.printHashTable());
     }
 
     private void modifyTask() throws IOException {
@@ -171,35 +195,29 @@ public class Main {
         System.out.println("This is the new No priority task list: ");
         System.out.println(controller.printNoPriorityQueue());
         System.out.println("This is the new Priority task list: ");
-        //controller.getPriorityTasks().heapSort();
         System.out.println(controller.printPriorityHeap());
     }
 
     private void deleteTask() throws  IOException, ListIsNullException {
 
-        System.out.println("This is the task list: ");
-        System.out.println(controller.printHashTable());
+        System.out.println("Do you want to delete a priority task or a no priority task?");
+        System.out.println("1. Priority task");
+        System.out.println("2. No priority task");
+        String optionStrNorP = reader.readLine();
+        int optionInt = Integer.parseInt(optionStrNorP);
 
-        System.out.println("Insert the id of the task you want to delete: ");
-        String idDeleteStr = reader.readLine();
-        int idDeleteInt = Integer.parseInt(idDeleteStr);
-
-        System.out.println("The task was deleted successfully");
-
-        try {
-            controller.removeGeneral(idDeleteInt);
-        } catch (ListIsNullException e){
-            throw new ListIsNullException("The list is empty");
+        if(optionInt == 1){
+            System.out.println(controller.removePriority());
+            System.out.println("This is the new Priority task list: ");
+            System.out.println(controller.printPriorityHeap());
+        } else if(optionInt == 2){
+            System.out.println(controller.removeNoPriority());
+            System.out.println("This is the new No priority task list: ");
+            System.out.println(controller.printNoPriorityQueue());
+        } else{
+            System.out.println("Invalid option");
         }
-
-        System.out.println("This is the new task list in HashTable (no order): ");
-        System.out.println(controller.printHashTable());
-
-
     }
-
-
-
     private void undoMethod(){
 
     }

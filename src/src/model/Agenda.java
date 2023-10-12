@@ -2,6 +2,7 @@ package model;
 
 import exceptions.ListIsNullException;
 import exceptions.StructureNullException;
+import org.w3c.dom.Node;
 
 public class Agenda<K,V, T extends  Comparable<T>> {
 
@@ -78,8 +79,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                             return false;
                         }
                     } else {
-                        priorityTasks.delete((Task) table.searchNode(position).getValue()); // aca se esta haciendo el metodo delete de priorityTasks ESTA MALOOOOO
-
+                        priorityTasks.remove((Task) table.searchNode(position).getValue()); // aca se esta haciendo el metodo remove de priorityTasks ESTA MALOOOOO
                     }
                     if (priority == 0) {
                         nonPriorityTasks.enqueue((Task) table.searchNode(position).getValue());
@@ -89,27 +89,29 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                     flag = true;
                     break;
             }
-            priorityTasks.buildMaxHeapify();
         }
         return flag;
     }
+    public String removePriority(){
+        String msg = "";
+        Task node = priorityTasks.max();
+        int idNode = node.getId();
+        Task task = (Task)table.search(idNode);
+        table.delete(idNode);
+        priorityTasks.extractMax();
+        msg += "Task " + node.getTitle() + " has been removed ";
+        return msg;
+    }
 
-
-    public boolean removeGeneral(int id) throws ListIsNullException{
-        boolean flag = false;
-        Task task = (Task)table.search(id);
-        table.delete(id);
-        if (task.getPriority() == 0){
-            try {
-                removeNonPriorityTask(task);
-            } catch (ListIsNullException e){
-                throw new ListIsNullException("The list is empty");
-            }
-        } else {
-            priorityTasks.delete(task);
-            flag = true;
-        }
-        return flag;
+    public String removeNoPriority() throws ListIsNullException{
+        String msg = "";
+        Task nodeNo = nonPriorityTasks.peek();
+        int idNodeNo = nodeNo.getId();
+        Task taskNo = (Task)table.search(idNodeNo);
+        table.delete(idNodeNo);
+        nonPriorityTasks.dequeue();
+        msg += "Task " + nodeNo.getTitle() + " has been removed " ;
+        return msg;
     }
 
     public boolean removeNonPriorityTask (Task task) throws ListIsNullException {
@@ -128,18 +130,14 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                 int newsize = temp.size();
                 for (int i = 0; i < newsize; ++i) {
                     this.nonPriorityTasks.enqueue((Task) temp.dequeue());
+                    flag = true;
                 }
-                flag = true;
                 return flag;
             }
         } catch (ListIsNullException e) {
             throw new ListIsNullException("The list is empty");
         }
     }
-
-
-
-
     public boolean undoMethod () {
         boolean flag = false;
 
