@@ -18,6 +18,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
             addTasks("tarea1", "descripcion1", new Date(1,1,1), 1);
             addTasks("tarea2", "descripcion2", new Date(2,2,2), 2);
             addTasks("tarea3", "descripcion3", new Date(3,3,3), 3);
+            addTasks("tarea4", "descripcion4", new Date(4,4,4), 2);
         } catch (StructureNullException e) {
             throw new RuntimeException(e);
         }
@@ -63,23 +64,24 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
         int position = table.hashFunction(key);
 
-        undoStack.push(new Actions(EnumAction.MODIFY, table.searchNode(position).getValue()));
-
         if (table.searchNode(position).getValue() != null) {
             switch (option) {
-                case 1:
+                case 1:undoStack.push(new Actions(EnumAction.MODIFY1, table.searchNode(position).getValue()));
                     ((Task) table.searchNode(position).getValue()).setTitle(title);
                     flag = true;
                     break;
                 case 2:
+                    undoStack.push(new Actions(EnumAction.MODIFY2, table.searchNode(position).getValue()));
                     ((Task) table.searchNode(position).getValue()).setDescription(description);
                     flag = true;
                     break;
                 case 3:
+                    undoStack.push(new Actions(EnumAction.MODIFY3, table.searchNode(position).getValue()));
                     ((Task) table.searchNode(position).getValue()).setDate(date);
                     flag = true;
                     break;
                 case 4:
+                    undoStack.push(new Actions(EnumAction.MODIFY4, table.searchNode(position).getValue()));
                     ((Task) table.searchNode(position).getValue()).setPriority(priority);
                     if (nonPriorityTasks.verify((Task) table.searchNode(position).getValue())) {
                         try {
@@ -160,9 +162,11 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
             Actions action = undoStack.pop();
 
+            Task task = (Task) action.getObject();
+
             if(action.getAction() == EnumAction.ADD){
-                Task task = (Task) action.getObject();
-                table.delete(task.getId());
+
+              table.delete(task.getId());
                 if(task.getPriority() == 0){
                     nonPriorityTasks.dequeue(); // esto esta mal
                 }else{
@@ -170,16 +174,34 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                 }
 
             }else if(action.getAction() == EnumAction.REMOVE){
-                Task task = (Task) action.getObject();
+
                 table.insert(task.getId(), task);
                 if(task.getPriority() == 0){
                     nonPriorityTasks.enqueue(task);
                 }else{
                     priorityTasks.insert(task.getPriority(), task);
                 }
-            }else if (action.getAction() == EnumAction.MODIFY){
+            }else if (action.getAction() == EnumAction.MODIFY1 && action.getAction() == EnumAction.MODIFY2 && action.getAction() == EnumAction.MODIFY3 && action.getAction() == EnumAction.MODIFY4){
 
-                Task task = (Task) action.getObject();
+                if (action.getAction() == EnumAction.MODIFY1){
+
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 1, task.getId(), task.getPriority());
+
+                }else if (action.getAction() == EnumAction.MODIFY2){
+
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 2, task.getId(), task.getPriority());
+
+                }else if (action.getAction() == EnumAction.MODIFY3){
+
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 3, task.getId(), task.getPriority());
+                }else if (action.getAction() == EnumAction.MODIFY4){
+
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 4, task.getId(), task.getPriority());
+                }
+
+
+
+                /**Task task = (Task) action.getObject();
                 table.delete(task.getId());
                 if(task.getPriority() == 0){
                     nonPriorityTasks.dequeue(); // esto esta mal hay que cambiar la forma de hacer el remove
@@ -191,7 +213,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                     nonPriorityTasks.enqueue(task);
                 }else{
                     priorityTasks.insert(task.getPriority(), task);
-                }
+                }**/
             }
             flag = true;
 

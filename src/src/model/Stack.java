@@ -30,6 +30,7 @@ public class Stack<K,V> implements IStack<V> {
 
     @Override
     public V pop() throws ListIsNullException {
+        ElementNode<V> currentTop = top;
         ElementNode<V> currentPointer = top;
         if (currentPointer != null){
             currentPointer = top.getNext();
@@ -38,7 +39,7 @@ public class Stack<K,V> implements IStack<V> {
             if (top != null){
                 top.setPrev(null);
             }
-            return currentPointer.getValue();
+            return currentTop.getValue();
         }
         else {
             throw new exceptions.ListIsNullException("The list is empty");        }
@@ -58,5 +59,14 @@ public class Stack<K,V> implements IStack<V> {
         return top == null;
     }
 
+    public String toString(){
+        String msg = "";
+        ElementNode<V> pointer = top;
+        while(pointer != null){
+            msg += pointer.getValue() + "\n";
+            pointer = pointer.getNext();
+        }
+        return msg;
+    }
 
 }
