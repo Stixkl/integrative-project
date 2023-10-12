@@ -2,13 +2,14 @@ package model;
 
 import exceptions.ListIsNullException;
 import exceptions.StructureNullException;
-import org.w3c.dom.Node;
 
 public class Agenda<K,V, T extends  Comparable<T>> {
 
     private HashTable<Integer,Task> table = new HashTable<Integer, Task>(1000);
     private Queue<Task> nonPriorityTasks = new Queue<Task>();
     private Heap<Task> priorityTasks = new Heap<Task>();
+
+    private Stack<Object, Actions> undoStack = new Stack<Object, Actions>();
 
     private int keyGlobal = 1;
 
@@ -39,6 +40,11 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
     public boolean addTasks(String title, String description, Date date, int priority) throws StructureNullException {
         Task task = new Task(keyGlobal,title, description, date,priority);
+
+        Actions action = new Actions(EnumAction.ADD, task);
+
+        undoStack.push(action);
+
         if(priority==0){
             nonPriorityTasks.enqueue(task);
         }else{
@@ -56,6 +62,9 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         boolean flag = false;
 
         int position = table.hashFunction(key);
+
+        undoStack.push(new Actions(EnumAction.MODIFY, table.searchNode(position).getValue()));
+
         if (table.searchNode(position).getValue() != null) {
             switch (option) {
                 case 1:
@@ -97,6 +106,9 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         Task node = priorityTasks.max();
         int idNode = node.getId();
         Task task = (Task)table.search(idNode);
+
+        undoStack.push(new Actions(EnumAction.REMOVE, task));
+
         table.delete(idNode);
         priorityTasks.extractMax();
         msg += "Task " + node.getTitle() + " has been removed ";
@@ -108,6 +120,9 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         Task nodeNo = nonPriorityTasks.peek();
         int idNodeNo = nodeNo.getId();
         Task taskNo = (Task)table.search(idNodeNo);
+
+        undoStack.push(new Actions(EnumAction.REMOVE, taskNo));
+
         table.delete(idNodeNo);
         nonPriorityTasks.dequeue();
         msg += "Task " + nodeNo.getTitle() + " has been removed " ;
@@ -138,11 +153,51 @@ public class Agenda<K,V, T extends  Comparable<T>> {
             throw new ListIsNullException("The list is empty");
         }
     }
-    public boolean undoMethod () {
+    public boolean undoMethod () throws ListIsNullException {
         boolean flag = false;
 
-        // utiliza un stack para hacer un metodo de deshacer
+        try{
 
+            Actions action = undoStack.pop();
+
+            if(action.getAction() == EnumAction.ADD){
+                Task task = (Task) action.getObject();
+                table.delete(task.getId());
+                if(task.getPriority() == 0){
+                    nonPriorityTasks.dequeue(); // esto esta mal
+                }else{
+                    priorityTasks.extractMax(); // esto esta mal
+                }
+
+            }else if(action.getAction() == EnumAction.REMOVE){
+                Task task = (Task) action.getObject();
+                table.insert(task.getId(), task);
+                if(task.getPriority() == 0){
+                    nonPriorityTasks.enqueue(task);
+                }else{
+                    priorityTasks.insert(task.getPriority(), task);
+                }
+            }else if (action.getAction() == EnumAction.MODIFY){
+
+                Task task = (Task) action.getObject();
+                table.delete(task.getId());
+                if(task.getPriority() == 0){
+                    nonPriorityTasks.dequeue(); // esto esta mal hay que cambiar la forma de hacer el remove
+                }else{
+                    priorityTasks.remove(task); // esto esta mal hay que cambiar la forma de hacer el remove
+                }
+                table.insert(task.getId(), task);
+                if(task.getPriority() == 0){
+                    nonPriorityTasks.enqueue(task);
+                }else{
+                    priorityTasks.insert(task.getPriority(), task);
+                }
+            }
+            flag = true;
+
+        }catch (ListIsNullException e){
+            throw new ListIsNullException("The list is empty");
+        }
 
         return flag;
     }

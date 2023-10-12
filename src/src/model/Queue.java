@@ -86,5 +86,16 @@ public class Queue<V> {
         }
         return msg;
     }
+
+    public V search(V value) {
+    	ElementNode<V> node = front;
+    	while(node != null) {
+    		if(node.getValue().equals(value)) {
+    			return node.getValue();
+    		}
+    		node = node.getNext();
+    	}
+    	return null;
+    }
 }
 

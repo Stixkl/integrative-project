@@ -218,7 +218,17 @@ public class Main {
             System.out.println("Invalid option");
         }
     }
-    private void undoMethod(){
+    private void undoMethod() throws ListIsNullException {
+
+        try{
+            controller.undoMethod();
+            System.out.println("This is the new No priority task list: ");
+            System.out.println(controller.printNoPriorityQueue());
+            System.out.println("This is the new Priority task list: ");
+            System.out.println(controller.printPriorityHeap());
+        } catch (ListIsNullException e) {
+            System.out.println("There is no more actions to undo");
+        }
 
     }
 }
