@@ -72,53 +72,7 @@ public class HashTable<K,V> implements IHashTable<K,V>{
         }
         return null;
     }
-    /*
-        int position = this.hashFunction(key);
 
-        HashNode<K,V> pointer = table[position];
-        boolean flag = true;
-        if (pointer != null) {
-            while(flag){
-                if(pointer.getKey().equals(key)){
-                    flag = false;
-                }
-                if(flag){
-                    pointer = pointer.getNext();
-                    if(pointer == null){
-                        flag = false;
-                    }
-                }
-            }
-        }
-        if (pointer == null) {
-            return null;
-        } else {
-            return pointer.getValue();
-        }
-
-        ----------
-
-
-        int position = hashFunction(key);
-
-        HashNode<K,V> pointer = table[position];
-        boolean flag = true;
-        if (pointer != null) {
-            while(flag){
-                if(pointer.getKey().equals(key)){
-                    flag = false;
-                }
-
-                if(flag){
-                    pointer = pointer.getNext();
-                    if(pointer == null){
-                        flag = false;
-                    }
-                }
-            }
-        }
-        return pointer;
-     */
     public HashNode<K,V> searchNode(K key) {
         int position = this.hashFunction(key);
 

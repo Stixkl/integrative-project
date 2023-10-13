@@ -18,18 +18,27 @@ public class Main {
         controller = new Agenda();
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ListIsNullException, StructureNullException, IOException {
         Main m = new Main();
-        try {
-            m.menu();
-        } catch (IOException e) {
-        } catch (StructureNullException e) {
-        } catch (ListIsNullException e){
+        boolean flag = false;
+        while (!flag) {
+            try {
+                m.menu();
+            } catch (IOException e) {
+                throw new IOException("Input Output Exception");
+            } catch (StructureNullException e) {
+                throw new StructureNullException();
+            } catch (ListIsNullException e) {
+                throw new ListIsNullException("The list is empty");
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Invalid input");
+            }
+            flag = true;
         }
     }
 
 
-    private void menu() throws IOException, StructureNullException, ListIsNullException {
+    private void menu() throws IOException, StructureNullException, ListIsNullException, NumberFormatException {
         System.out.println("Welcome to the TASK AND REMINDER APP");
         System.out.println("******************************************************************");
         boolean flag = false;
@@ -53,7 +62,15 @@ public class Main {
 
             switch (optionMenu) {
                 case 1:
-                    addTask();
+                    try {
+                        addTask();
+                    } catch (IOException e) {
+                        throw new IOException("Input Output Exception");
+                    } catch (NumberFormatException a) {
+                        throw new NumberFormatException("Invalid input");
+                    } catch (StructureNullException e) {
+                        throw new StructureNullException();
+                    }
                     break;
                 case 2:
                     modifyTask();
@@ -81,44 +98,45 @@ public class Main {
         }
     }
 
-    private void addTask() throws IOException, StructureNullException {
-
-        boolean flag = true;
-        String title = "Default_Title";
-        while (flag) {
-            System.out.println("Introduce task´s title");
-            title = reader.readLine();
-            if (title.length() > 30) {
-                System.out.println("Task title must be less than 30 characters");
-            } else {
-                flag = false;
+    private void addTask() throws IOException, StructureNullException, NumberFormatException {
+            boolean flag = true;
+            String title = "Default_Title";
+            while (flag) {
+                System.out.println("Introduce task´s title");
+                title = reader.readLine();
+                if (title.length() > 30) {
+                    System.out.println("Task title must be less than 30 characters");
+                } else {
+                    flag = false;
+                }
             }
-        }
-        System.out.println("Introduce task´s description: ");
-        String description = reader.readLine();
+            System.out.println("Introduce task´s description: ");
+            String description = reader.readLine();
 
-        System.out.println("Select task priority: ");
-        System.out.println("3. High priority");
-        System.out.println("2. Priority");
-        System.out.println("1. Least priority");
-        System.out.println("0. No priority");
-        String optionPriority = reader.readLine();
-        int optionPri = Integer.parseInt(optionPriority);
-
-        System.out.println("Introduce task date (DD/MM/YYYY format): ");
-        String dayStr = reader.readLine();
-        int day = Integer.parseInt(dayStr);
-        String monthStr = reader.readLine();
-        int month = Integer.parseInt(monthStr);
-        String yearStr = reader.readLine();
-        int year = Integer.parseInt(yearStr);
-        Date date = new Date(day,month,year);
-        if(controller.addTasks(title, description, date, optionPri)){
-            System.out.println("Task added successfully");
-        } else{
-            System.out.println("Task not added");
-        }
-
+            System.out.println("Select task priority: ");
+            System.out.println("3. High priority");
+            System.out.println("2. Priority");
+            System.out.println("1. Least priority");
+            System.out.println("0. No priority");
+            String optionPriority = reader.readLine();
+            int optionPri = Integer.parseInt(optionPriority);
+            if (optionPri > 3 || optionPri < 0) {
+                System.out.println("Invalid option");
+            } else {
+                System.out.println("Introduce task date (DD/MM/YYYY format): ");
+                String dayStr = reader.readLine();
+                int day = Integer.parseInt(dayStr);
+                String monthStr = reader.readLine();
+                int month = Integer.parseInt(monthStr);
+                String yearStr = reader.readLine();
+                int year = Integer.parseInt(yearStr);
+                Date date = new Date(day, month, year);
+                if (controller.addTasks(title, description, date, optionPri)) {
+                    System.out.println("Task added successfully");
+                } else {
+                    System.out.println("Task not added");
+                }
+            }
     }
 
     private void printPriory(){
@@ -151,55 +169,57 @@ public class Main {
 
         String optionString = reader.readLine();
         int optionInt = Integer.parseInt(optionString);
+        if (optionInt > 3 || optionInt < 1) {
+            System.out.println("Invalid option");
+        } else {
+            switch (optionInt) {
+                case 1:
+                    System.out.println("Insert the new title");
+                    String newTitle = reader.readLine();
+                    controller.modifyTask(newTitle, null, null, optionInt, idModifyInt, 0);
+                    break;
+                case 2:
+                    System.out.println("Insert the new description");
+                    String newDescription = reader.readLine();
+                    controller.modifyTask(null, newDescription, null, optionInt, idModifyInt, 0);
+                    break;
+                case 3:
+                    System.out.println("Insert the new date");
 
-        switch (optionInt) {
-            case 1:
-                System.out.println("Insert the new title");
-                String newTitle = reader.readLine();
-                controller.modifyTask(newTitle, null, null, optionInt, idModifyInt, 0);
-                break;
-            case 2:
-                System.out.println("Insert the new description");
-                String newDescription = reader.readLine();
-                controller.modifyTask(null, newDescription, null, optionInt, idModifyInt, 0);
-                break;
-            case 3:
-                System.out.println("Insert the new date");
-
-                System.out.println("Insert the day (dd)");
-                String newDay = reader.readLine();
-                int day = Integer.parseInt(newDay);
-                System.out.println("Insert the month (mm)");
-                String newMonth = reader.readLine();
-                int month = Integer.parseInt(newMonth);
-                System.out.println("Insert the year (yyyy)");
-                String newYear = reader.readLine();
-                int year = Integer.parseInt(newYear);
-                Date date = new Date(day, month, year);
-                controller.modifyTask(null, null, date, optionInt, idModifyInt, 0);
-                break;
-            case 4:
-                System.out.println("Insert the new priority of the task");
-                System.out.println("3. High priority");
-                System.out.println("2. Priority");
-                System.out.println("1. Least priority");
-                System.out.println("0. No priority");
-                String newPriorityStr = reader.readLine();
-                int newPriorityInt = Integer.parseInt(newPriorityStr);
-                controller.modifyTask(null, null, null, optionInt, idModifyInt, newPriorityInt);
-                break;
-            default:
-                System.out.println("X");
-                break;
+                    System.out.println("Insert the day (dd)");
+                    String newDay = reader.readLine();
+                    int day = Integer.parseInt(newDay);
+                    System.out.println("Insert the month (mm)");
+                    String newMonth = reader.readLine();
+                    int month = Integer.parseInt(newMonth);
+                    System.out.println("Insert the year (yyyy)");
+                    String newYear = reader.readLine();
+                    int year = Integer.parseInt(newYear);
+                    Date date = new Date(day, month, year);
+                    controller.modifyTask(null, null, date, optionInt, idModifyInt, 0);
+                    break;
+                case 4:
+                    System.out.println("Insert the new priority of the task");
+                    System.out.println("3. High priority");
+                    System.out.println("2. Priority");
+                    System.out.println("1. Least priority");
+                    System.out.println("0. No priority");
+                    String newPriorityStr = reader.readLine();
+                    int newPriorityInt = Integer.parseInt(newPriorityStr);
+                    controller.modifyTask(null, null, null, optionInt, idModifyInt, newPriorityInt);
+                    break;
+                default:
+                    System.out.println("X");
+                    break;
+            }
+            System.out.println("This is the new No priority task list: ");
+            System.out.println(controller.printNoPriorityQueue());
+            System.out.println("This is the new Priority task list: ");
+            System.out.println(controller.printPriorityHeap());
         }
-        System.out.println("This is the new No priority task list: ");
-        System.out.println(controller.printNoPriorityQueue());
-        System.out.println("This is the new Priority task list: ");
-        System.out.println(controller.printPriorityHeap());
     }
 
     private void deleteTask() throws  IOException, ListIsNullException {
-
         System.out.println("Do you want to delete a priority task or a no priority task?");
         System.out.println("1. Priority task");
         System.out.println("2. No priority task");

@@ -1,5 +1,4 @@
 package model;
-
 import exceptions.ListIsNullException;
 import exceptions.StructureNullException;
 
@@ -8,7 +7,6 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     private HashTable<Integer,Task> table = new HashTable<Integer, Task>(1000);
     private Queue<Task> nonPriorityTasks = new Queue<Task>();
     private Heap<Task> priorityTasks = new Heap<Task>();
-
     private Stack<Object, Actions> undoStack = new Stack<Object, Actions>();
 
     private int keyGlobal = 1;

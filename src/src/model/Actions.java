@@ -1,18 +1,18 @@
 package model;
 
-public class Actions {
+    public class Actions {
 
-    private EnumAction action;
+        private EnumAction action;
 
-    private Task task;
+        private Task task;
 
-    public Actions(EnumAction action, Task task) {
+        public Actions(EnumAction action, Task task) {
 
-        this.action = action;
+            this.action = action;
 
-        this.task = task;
+            this.task = task;
 
-    }
+        }
 
     public EnumAction getAction() {
         return action;
