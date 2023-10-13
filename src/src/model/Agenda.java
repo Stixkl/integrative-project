@@ -85,7 +85,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                     ((Task) table.searchNode(position).getValue()).setPriority(priority);
                     if (nonPriorityTasks.verify((Task) table.searchNode(position).getValue())) {
                         try {
-                            removeNonPriorityTask((Task) table.searchNode(position).getValue());
+                            removeForModififyNonPriorityTask((Task) table.searchNode(position).getValue());
                         } catch (ListIsNullException e){
                             return false;
                         }
@@ -103,21 +103,25 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
         return flag;
     }
-    public String removePriority(){
+    public String deletePriority() throws ListIsNullException {
         String msg = "";
-        Task node = priorityTasks.max();
-        int idNode = node.getId();
-        Task task = (Task)table.search(idNode);
+        try {
+            Task node = priorityTasks.max();
+            int idNode = node.getId();
+            Task task = (Task)table.search(idNode);
 
-        undoStack.push(new Actions(EnumAction.REMOVE, task));
+            undoStack.push(new Actions(EnumAction.REMOVE, task));
 
-        table.delete(idNode);
-        priorityTasks.extractMax();
-        msg += "Task " + node.getTitle() + " has been removed ";
-        return msg;
+            table.delete(idNode);
+            priorityTasks.extractMax();
+            msg += "Task " + node.getTitle() + " has been removed ";
+            return msg;
+        }catch (ListIsNullException e){
+            throw new ListIsNullException("The list is empty");
+        }
     }
 
-    public String removeNoPriority() throws ListIsNullException{
+    public String deleteNoPriority() throws ListIsNullException{
         String msg = "";
         Task nodeNo = nonPriorityTasks.peek();
         int idNodeNo = nodeNo.getId();
@@ -131,22 +135,22 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return msg;
     }
 
-    public boolean removeNonPriorityTask (Task task) throws ListIsNullException {
+    public boolean removeForModififyNonPriorityTask (Task task) throws ListIsNullException {
         boolean flag = false;
         try {
-            Queue<Task> temp = new Queue();
+            Queue<Task> temporalQueue = new Queue();
             while (!this.nonPriorityTasks.isEmpty()) {
                 Task tempElement = (Task) nonPriorityTasks.dequeue();
                 if (!tempElement.equals(task)) {
-                    temp.enqueue(tempElement);
+                    temporalQueue.enqueue(tempElement);
                 }
             }
-            if (temp.size() == nonPriorityTasks.size()) {
+            if (temporalQueue.size() == nonPriorityTasks.size()) {
                 return flag;
             } else {
-                int newsize = temp.size();
+                int newsize = temporalQueue.size();
                 for (int i = 0; i < newsize; ++i) {
-                    this.nonPriorityTasks.enqueue((Task) temp.dequeue());
+                    this.nonPriorityTasks.enqueue((Task) temporalQueue.dequeue());
                     flag = true;
                 }
                 return flag;
@@ -154,6 +158,45 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         } catch (ListIsNullException e) {
             throw new ListIsNullException("The list is empty");
         }
+    }
+
+
+    public boolean removeForModifyPriorityTask(Task task){
+        boolean flag = false;
+
+        Heap<Task> temporalHeap = new Heap<>();
+        int sizeListPriority = priorityTasks.size();
+        try {
+            while (!priorityTasks.isEmpty()) {
+                Task element = null;
+
+                element = priorityTasks.extractMax();
+
+                if (!element.equals(task)) {
+                    temporalHeap.insert(element.getPriority(), element);
+                }
+            }
+        }catch (ListIsNullException e){
+            return false;
+        }
+
+        if (temporalHeap.size() == sizeListPriority)
+            return false;
+
+
+        while (!temporalHeap.isEmpty()) {
+
+            Task element = null;
+            try {
+                element = temporalHeap.extractMax();
+                priorityTasks.insert(element.getPriority(), element);
+
+            } catch (ListIsNullException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        flag = true;
+        return flag;
     }
     public boolean undoMethod () throws ListIsNullException {
         boolean flag = false;

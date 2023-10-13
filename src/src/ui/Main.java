@@ -207,11 +207,11 @@ public class Main {
         int optionInt = Integer.parseInt(optionStrNorP);
 
         if(optionInt == 1){
-            System.out.println(controller.removePriority());
+            System.out.println(controller.deletePriority());
             System.out.println("This is the new Priority task list: ");
             System.out.println(controller.printPriorityHeap());
         } else if(optionInt == 2){
-            System.out.println(controller.removeNoPriority());
+            System.out.println(controller.deleteNoPriority());
             System.out.println("This is the new No priority task list: ");
             System.out.println(controller.printNoPriorityQueue());
         } else{

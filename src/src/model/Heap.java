@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ListIsNullException;
+
 import java.util.ArrayList;
 
 public class Heap<V> implements IPriorityHeap<V>{
@@ -20,6 +22,10 @@ public class Heap<V> implements IPriorityHeap<V>{
         return A.size() == 0;
     }
 
+    public int size(){
+        return A.size();
+    }
+
     public boolean remove(V node) {
         for (int i = 0; i < A.size(); i++) {
             if(A.get(i).getNode().equals(node)){
@@ -32,7 +38,7 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     @Override
-    public V extractMax() {
+    public V extractMax()  throws ListIsNullException {
         if(A.isEmpty()) {
             // Aqui va la excepcion en lugar de imprimir
             System.out.println("heap underflow");
