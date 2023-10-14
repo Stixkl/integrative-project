@@ -88,7 +88,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                             return false;
                         }
                     } else {
-                        priorityTasks.remove((Task) table.searchNode(position).getValue()); // aca se esta haciendo el metodo remove de priorityTasks ESTA MALOOOOO
+                        removeForModifyPriorityTask((Task) table.searchNode(position).getValue());
                     }
                     if (priority == 0) {
                         nonPriorityTasks.enqueue((Task) table.searchNode(position).getValue());
