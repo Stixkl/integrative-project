@@ -48,6 +48,7 @@ public class Queue<V> {
         return front.getValue();
     }
 
+
     public boolean isEmpty() {
         return front == null;
     }

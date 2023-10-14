@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.ListIsNullException;
+import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 
@@ -13,9 +14,18 @@ public class Heap<V> implements IPriorityHeap<V>{
     }
 
     @Override
-    public void insert(int value, V value2) {
-        A.add(new NodeHeap(value, value2));
-        buildMaxHeapify();
+    public boolean insert(int value, V value2) {
+        if(value2 == null){
+            return false;
+        } else {
+            A.add(new NodeHeap(value, value2));
+            buildMaxHeapify();
+            return true;
+        }
+    }
+
+    public NodeHeap<V> get(int index){
+        return A.get(index);
     }
 
     public boolean isEmpty() {
@@ -131,6 +141,4 @@ public class Heap<V> implements IPriorityHeap<V>{
             maxHeapify(masGrande);
         }
     }
-
-
 }
