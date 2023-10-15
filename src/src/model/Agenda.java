@@ -302,18 +302,18 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
                 if (action.getAction() == EnumAction.MODIFY1){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 1, task.getId(), action.getPriority());
+                    modifyTask(action.getTitle(), action.getDescription(), task.getDate(), 1, task.getId(), action.getPriority());
 
                 }else if (action.getAction() == EnumAction.MODIFY2){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 2, task.getId(), action.getPriority());
+                    modifyTask(action.getTitle(), action.getDescription(), task.getDate(), 2, task.getId(), action.getPriority());
 
                 }else if (action.getAction() == EnumAction.MODIFY3){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 3, task.getId(), action.getPriority());
+                    modifyTask(action.getTitle(), action.getDescription(), task.getDate(), 3, task.getId(), action.getPriority());
                 }else if (action.getAction() == EnumAction.MODIFY4){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 4, task.getId(), action.getPriority());
+                    modifyTask(action.getTitle(), action.getDescription(), task.getDate(), 4, task.getId(), action.getPriority());
                 }
 
             }

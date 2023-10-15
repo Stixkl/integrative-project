@@ -8,6 +8,10 @@ package model;
 
         private int priority;
 
+        private String title;
+
+        private String description;
+
 // The code snippet `public Actions(EnumAction action, Task task)` is a constructor for the `Actions`
 // class. It takes two parameters, `action` of type `EnumAction` and `task` of type `Task`.
         public Actions(EnumAction action, Task task) {
@@ -17,6 +21,10 @@ package model;
             this.task = task;
 
             this.priority = task.getPriority();
+
+            this.title = task.getTitle();
+
+            this.description = task.getDescription();
 
         }
 
@@ -41,4 +49,11 @@ package model;
     public int getPriority(){
         return this.priority;
     }
-}
+    public String getTitle(){
+        return this.title;
+    }
+
+        public String getDescription() {
+            return description;
+        }
+    }
