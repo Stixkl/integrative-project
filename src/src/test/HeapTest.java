@@ -19,12 +19,6 @@ public class HeapTest {
         heap.insert(1,"Tarea1");
         heap.insert(2,"Tarea2");
     }
-    public void setUp3(){
-        heap= new Heap<>();
-        heap.insert(-120, 40);
-        heap.insert(-4, 30);
-
-    }
      @Test
      public void HeapTestInsert() {
         setUp1();
