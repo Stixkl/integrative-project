@@ -169,7 +169,7 @@ public class Main {
 
         String optionString = reader.readLine();
         int optionInt = Integer.parseInt(optionString);
-        if (optionInt > 3 || optionInt < 1) {
+        if (optionInt > 4 || optionInt < 1) {
             System.out.println("Invalid option");
         } else {
             switch (optionInt) {

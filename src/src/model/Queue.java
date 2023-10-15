@@ -57,14 +57,17 @@ public class Queue<V> {
     }
 
     /**
-     * The peek() function returns the value of the front element in a data structure.
+     * The peak() function returns the value of the front element in a data structure.
      * 
      * @return The method is returning the value of the front node in the data structure.
      */
-    public V peek() {
-        return front.getValue();
+    public V peak() throws ListIsNullException {
+        try {
+            return front.getValue();
+        } catch (NullPointerException e) {
+            throw new ListIsNullException("The list is empty");
+        }
     }
-
 
    /**
     * The function checks if the front of a queue is null, indicating that the queue is empty.

@@ -179,7 +179,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
      */
     public String deleteNoPriority() throws ListIsNullException{
         String msg = "";
-        Task nodeNo = nonPriorityTasks.peek();
+        Task nodeNo = nonPriorityTasks.peak();
         int idNodeNo = nodeNo.getId();
         Task taskNo = (Task)table.search(idNodeNo);
 

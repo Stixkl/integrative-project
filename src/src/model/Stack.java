@@ -16,7 +16,7 @@ public class Stack<K,V> implements IStack<V> {
     public boolean push(V value) {
         ElementNode<V> node = new ElementNode(value);
         boolean flag = false;
-        if (top == null) { // lista vacia
+        if (top == null) {
             top = node;
             flag = true;
             size++;

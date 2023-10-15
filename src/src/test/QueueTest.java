@@ -47,9 +47,9 @@ public class QueueTest {
  * The function tests the peek method of a queue and asserts that the expected value is returned.
  */
     @Test
-    public void QueueTestPeek(){
+    public void QueueTestPeek() throws ListIsNullException{
         setUp2();
-        assertEquals(1, queue.peek());
+        assertEquals(1, queue.peak());
     }
 /**
  * The function tests the dequeue operation of a queue and checks if the size and empty status of the

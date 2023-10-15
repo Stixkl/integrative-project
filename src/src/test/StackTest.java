@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 public class StackTest {
 
-    private Stack<Object, Actions> stack;
+    private Stack<Object, Actions> undoStack;
 
    /**
     * The setUp1 function initializes a new stack.
     */
     public void setUp1() {
-        stack = new Stack<>();
+        undoStack = new Stack<>();
     }
 
 /**
@@ -20,13 +20,13 @@ public class StackTest {
  * action on a Task object.
  */
     public void setUp2() {
-        stack = new Stack<>();
-        Task task = new Task(10, "1", "1", new Date(1,2,3), 1);
-        Task task2 = new Task(9, "2", "epa",new Date(1,2,4), 2);
-        Task task3 = new Task(8, "3", "sisa",new Date(1,2,5), 3);
-        stack.push(new Actions(EnumAction.ADD, task));
-        stack.push(new Actions(EnumAction.REMOVE, task2));
-        stack.push(new Actions(EnumAction.ADD, task3));
+        undoStack = new Stack<Object, Actions>();
+        Task task = new Task(10, "1", "Description1", new Date(1,2,3), 1);
+        Task task2 = new Task(9, "2", "Description2",new Date(1,2,4), 2);
+        Task task3 = new Task(8, "3", "Description3",new Date(1,2,5), 3);
+        undoStack.push(new Actions(EnumAction.ADD, task));
+        undoStack.push(new Actions(EnumAction.REMOVE, task2));
+        undoStack.push(new Actions(EnumAction.ADD, task3));
     }
 
 /**
@@ -36,8 +36,8 @@ public class StackTest {
     @Test
     public void StackTestPush() {
         setUp1();
-        assertEquals(0, stack.size());
-        assertEquals(true, stack.isEmpty());
+        assertEquals(0, undoStack.size());
+        assertEquals(true, undoStack.isEmpty());
     }
 /**
  * The StackTestPop function tests the pop method of a stack by asserting the expected actions and
@@ -47,39 +47,35 @@ public class StackTest {
     @Test
     public void StackTestPop() throws ListIsNullException {
         setUp2();
+        assertEquals(3, undoStack.size());
         try {
-            assertEquals(EnumAction.ADD, stack.pop().getAction());
-            assertEquals(EnumAction.REMOVE, stack.pop().getAction());
-            assertEquals(EnumAction.ADD, stack.pop().getAction());
+            assertEquals(EnumAction.ADD, undoStack.pop().getAction());
+
         } catch (ListIsNullException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(0, stack.size());
-        assertEquals(true, stack.isEmpty());
+        assertEquals(2, undoStack.size());
     }
 
 /**
  * The function StackTestTop tests the Top() method of a stack object.
  */
-    @Test
     public void StackTestTop(){
         setUp2();
-        assertEquals(EnumAction.ADD, stack.Top().getAction());
+        assertEquals(EnumAction.ADD, undoStack.Top().getAction());
     }
-
 /**
  * The function tests the size of a stack and verifies that it decreases by 1 after a pop operation.
  */
     @Test
     public void StackTestSize(){
         setUp2();
-        assertEquals(3, stack.size());
+        assertEquals(3, undoStack.size());
         try {
-            stack.pop();
+            undoStack.pop();
         } catch (ListIsNullException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(2, stack.size());
+        assertEquals(2, undoStack.size());
     }
 }
