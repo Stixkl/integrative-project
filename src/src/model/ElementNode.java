@@ -14,15 +14,6 @@ public class ElementNode<V> {
     }
 
 /**
- * The function returns the previous element node in a linked list.
- * 
- * @return The method is returning an ElementNode object with a generic type V.
- */
-    public ElementNode< V> getPrev() {
-        return prev;
-    }
-
-/**
  * The function returns the value associated with a key in a data structure.
  * 
  * @return The method is returning the value of type V.

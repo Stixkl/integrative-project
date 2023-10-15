@@ -18,10 +18,10 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
     public Agenda(){
         try {
-            addTasks("tarea1", "descripcion1", new Date(1,1,1), 1);
-            addTasks("tarea2", "descripcion2", new Date(2,2,2), 2);
-            addTasks("tarea3", "descripcion3", new Date(3,3,3), 3);
-            addTasks("tarea4", "descripcion4", new Date(4,4,4), 2);
+            addTasks("task1", "description1", new Date(1,1,1), 1);
+            addTasks("task2", "description2", new Date(2,2,2), 2);
+            addTasks("task3", "description3", new Date(3,3,3), 3);
+            addTasks("task4", "description4", new Date(4,4,4), 2);
         } catch (StructureNullException e) {
             throw new RuntimeException(e);
         }
@@ -312,21 +312,6 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                     modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 4, task.getId(), task.getPriority());
                 }
 
-
-
-                /**Task task = (Task) action.getObject();
-                table.delete(task.getId());
-                if(task.getPriority() == 0){
-                    nonPriorityTasks.dequeue(); // esto esta mal hay que cambiar la forma de hacer el remove
-                }else{
-                    priorityTasks.remove(task); // esto esta mal hay que cambiar la forma de hacer el remove
-                }
-                table.insert(task.getId(), task);
-                if(task.getPriority() == 0){
-                    nonPriorityTasks.enqueue(task);
-                }else{
-                    priorityTasks.insert(task.getPriority(), task);
-                }**/
             }
             flag = true;
 

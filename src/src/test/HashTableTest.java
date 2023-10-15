@@ -22,11 +22,11 @@ public class HashTableTest {
     public void setUp2(){
         hashTable = new HashTable<>(5);
 
-        hashTable.insert(1,"Tarea1");
-        hashTable.insert(2,"Tarea2");
-        hashTable.insert(3,"Tarea3");
-        hashTable.insert(4,"Tarea4");
-        hashTable.insert(5,"Tarea5");
+        hashTable.insert(1,"Task1");
+        hashTable.insert(2,"Task2");
+        hashTable.insert(3,"Task3");
+        hashTable.insert(4,"Task4");
+        hashTable.insert(5,"Task5");
     }
 
 /**
@@ -36,8 +36,8 @@ public class HashTableTest {
     public void setUp3(){
         hashTable = new HashTable<>(2);
 
-        hashTable.insert(1,"Tarea1");
-        hashTable.insert(2,"Tarea2");
+        hashTable.insert(1,"Task1");
+        hashTable.insert(2,"Task2");
     }
 
 /**
@@ -58,7 +58,7 @@ public class HashTableTest {
     @Test
     public void HashTestInsert2(){
         setUp1();
-        boolean flag = hashTable.insert(1, "Hola");
+        boolean flag = hashTable.insert(1, "Task");
         assertEquals(true,flag);
     }
 
@@ -80,8 +80,8 @@ public class HashTableTest {
     @Test
     public void HashTestInsert4(){
         setUp1();
-        boolean flag = hashTable.insert(1, "Hola");
-        boolean flag2 = hashTable.insert(1, "Hola");
+        boolean flag = hashTable.insert(1, "Task1");
+        boolean flag2 = hashTable.insert(1, "Task2");
         assertEquals(true,flag);
         assertEquals(true,flag2);
     }
@@ -93,7 +93,7 @@ public class HashTableTest {
     public void HashTestSearch(){
         setUp2();
         String result = hashTable.search(1);
-        assertEquals("Tarea1",result);
+        assertEquals("Task1",result);
     }
 /**
  * The HashTestSearch2 function tests the search method of a hash table by searching for a key that

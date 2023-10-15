@@ -22,8 +22,8 @@ public class HeapTest {
  */
     public void setUp2() {
         heap = new Heap();
-        heap.insert(1,"Tarea1");
-        heap.insert(2,"Tarea2");
+        heap.insert(1,"Task1");
+        heap.insert(2,"Task2");
     }
 
 /**
@@ -52,7 +52,7 @@ public class HeapTest {
     @Test
     public void HeapTestInsert2() {
         setUp1();
-        boolean result = heap.insert(1, "Hola");
+        boolean result = heap.insert(1, "Task1");
         assertEquals(true, result);
     }
 /**
@@ -61,7 +61,7 @@ public class HeapTest {
     @Test
     public void HeapTestRemove() {
         setUp2();
-        boolean result = heap.remove("Tarea1");
+        boolean result = heap.remove("Task1");
         assertEquals(true, result);
     }
 /**
@@ -71,7 +71,7 @@ public class HeapTest {
     @Test
     public void HeapTestRemove2() {
         setUp2();
-        boolean result = heap.remove("Tarea3");
+        boolean result = heap.remove("Task3");
         assertEquals(false, result);
     }
 /**

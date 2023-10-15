@@ -25,30 +25,12 @@ public class Date {
     }
 
 /**
- * The function sets the value of the "day" variable.
- * 
- * @param day The parameter "day" is an integer that represents the day of the month.
- */
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-/**
  * The function returns the value of the month.
  * 
  * @return The method is returning the value of the variable "month".
  */
     public int getMonth() {
         return month;
-    }
-
- /**
-  * The function sets the value of the month variable.
-  * 
-  * @param month The parameter "month" is an integer that represents the month value.
-  */
-    public void setMonth(int month) {
-        this.month = month;
     }
 
 /**
@@ -58,15 +40,6 @@ public class Date {
  */
     public int getYear() {
         return year;
-    }
-
-/**
- * The function sets the value of the "year" variable.
- * 
- * @param year The parameter "year" is an integer that represents the year value.
- */
-    public void setYear(int year) {
-        this.year = year;
     }
 
 /**

@@ -83,15 +83,6 @@ public class Task implements Comparable<Task> {
     }
 
 /**
- * The function sets the value of the "id" variable.
- * 
- * @param id The parameter "id" is an integer value that represents the ID of an object.
- */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-/**
  * The function returns the priority value.
  * 
  * @return The method is returning the value of the variable "priority".

@@ -50,16 +50,6 @@ public class HashNode<K,V> {
     }
 
 /**
- * The function sets the value of the "key" variable.
- * 
- * @param key The key parameter is of type K, which means it can be any type specified by the user when
- * calling the method.
- */
-    public void setKey(K key) {
-        this.key = key;
-    }
-
-/**
  * The function returns the next node in a hash table.
  * 
  * @return The method is returning the next HashNode in the linked list.
