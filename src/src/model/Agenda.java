@@ -11,6 +11,11 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
     private int keyGlobal = 1;
 
+// The `Agenda()` constructor is initializing a new instance of the `Agenda` class. It is adding four
+// tasks to the agenda using the `addTasks` method. Each task has a title, description, date, and
+// priority. If any of the tasks cannot be added due to a `StructureNullException`, it throws a
+// `RuntimeException` with the original exception as the cause.
+
     public Agenda(){
         try {
             addTasks("tarea1", "descripcion1", new Date(1,1,1), 1);
@@ -22,21 +27,48 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
 
     }
+/**
+ * The function returns a string representation of a hash table.
+ * 
+ * @return The method is returning a string representation of the hashtable.
+ */
     public String printHashTable(){
         String msg = table.toString();
         return msg;
     }
 
+/**
+ * The function returns a string representation of a non-priority queue.
+ * 
+ * @return The method is returning a string representation of the nonPriorityTasks.
+ */
     public String printNoPriorityQueue(){
         String msg = nonPriorityTasks.toString();
         return msg;
     }
 
+/**
+ * The function "printPriorityHeap" returns a string representation of a priority heap.
+ * 
+ * @return The method is returning a string representation of the priority heap.
+ */
     public String printPriorityHeap(){
         String msg = priorityTasks.show();
         return msg;
     }
 
+/**
+ * The addTasks function adds a new task to a task management system, either to a priority queue or a
+ * non-priority queue, and also updates a hash table with the new task.
+ * 
+ * @param title The title of the task.
+ * @param description The "description" parameter is a String that represents the description of the
+ * task. It provides additional details or information about the task.
+ * @param date The "date" parameter is of type Date and represents the date of the task.
+ * @param priority The priority parameter is an integer value that represents the priority level of the
+ * task. A higher priority value indicates a higher priority task.
+ * @return The method is returning a boolean value.
+ */
     public boolean addTasks(String title, String description, Date date, int priority) throws StructureNullException {
         Task task = new Task(keyGlobal,title, description, date,priority);
 
@@ -52,11 +84,25 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
         HashNode<Integer,Task> taskNode = (HashNode<Integer, Task>) new HashNode<Integer, Task>(keyGlobal, task);
         keyGlobal++;
-        // falta que se agregue al stack de undo
-        // falta excepciones
         return table.insert(taskNode.getKey(), task);
     }
 
+    /**
+     * The function modifies a task in a table based on the given parameters and returns a boolean
+     * value indicating whether the modification was successful or not.
+     * 
+     * @param title The title of the task that you want to modify.
+     * @param description The description parameter is a String that represents the new description for
+     * the task.
+     * @param date The "date" parameter is of type Date and represents the new date for the task.
+     * @param option The "option" parameter is used to determine which aspect of the task needs to be
+     * modified. The possible values for "option" are as follows:
+     * @param key The key parameter is an integer value used to determine the position of the task in
+     * the hash table.
+     * @param priority The priority parameter is an integer that represents the priority level of the
+     * task. It can range from 0 (lowest priority) to a higher number (higher priority).
+     * @return The method is returning a boolean value.
+     */
     public boolean modifyTask(String title, String description, Date date, int option, int key, int priority) {
         boolean flag = false;
 
@@ -101,6 +147,12 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
         return flag;
     }
+   /**
+    * The function deletes the task with the highest priority from a list and returns a message
+    * indicating that the task has been removed.
+    * 
+    * @return The method is returning a String message.
+    */
     public String deletePriority() throws ListIsNullException {
         String msg = "";
         try {
@@ -119,6 +171,12 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         }
     }
 
+    /**
+     * The function deletes a non-priority task from a table and a queue, and adds the task to an undo
+     * stack.
+     * 
+     * @return The method is returning a String message indicating that a task has been removed.
+     */
     public String deleteNoPriority() throws ListIsNullException{
         String msg = "";
         Task nodeNo = nonPriorityTasks.peek();
@@ -133,6 +191,13 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return msg;
     }
 
+    /**
+     * The function removes a specific task from a non-priority task queue and returns true if the task
+     * was successfully removed.
+     * 
+     * @param task The parameter "task" is of type Task, which represents a task object.
+     * @return The method is returning a boolean value.
+     */
     public boolean removeForModififyNonPriorityTask (Task task) throws ListIsNullException {
         boolean flag = false;
         try {
@@ -159,6 +224,13 @@ public class Agenda<K,V, T extends  Comparable<T>> {
     }
 
 
+    /**
+     * The function removes a specific task from a priority queue and modifies the priority queue
+     * accordingly.
+     * 
+     * @param task The parameter "task" is an object of type Task.
+     * @return The method is returning a boolean value.
+     */
     public boolean removeForModifyPriorityTask(Task task){
         boolean flag = false;
 
@@ -265,6 +337,11 @@ public class Agenda<K,V, T extends  Comparable<T>> {
         return flag;
     }
 
+   /**
+    * The function returns a Heap of Task objects representing priority tasks.
+    * 
+    * @return The method is returning a Heap of Task objects.
+    */
     public Heap<Task> getPriorityTasks() {
         return priorityTasks;
     }
