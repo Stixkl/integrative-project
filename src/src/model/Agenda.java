@@ -281,9 +281,9 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
               table.delete(task.getId());
                 if(task.getPriority() == 0){
-                    nonPriorityTasks.dequeue(); // esto esta mal
+                    removeForModififyNonPriorityTask(task);
                 }else{
-                    priorityTasks.extractMax(); // esto esta mal
+                    removeForModifyPriorityTask(task);
                 }
 
             }else if(action.getAction() == EnumAction.REMOVE){

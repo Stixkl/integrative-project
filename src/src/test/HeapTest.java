@@ -25,8 +25,7 @@ public class HeapTest {
         heap.insert(1,"Tarea1");
         heap.insert(2,"Tarea2");
     }
-<<<<<<< HEAD
-=======
+
 /**
  * The setUp3 function initializes a heap data structure and inserts two elements into it.
  */
@@ -39,7 +38,7 @@ public class HeapTest {
 /**
  * The HeapTestInsert function tests the insert method of the heap class.
  */
->>>>>>> d8907834a1308cb42a472b3d50fadb5471635c27
+
      @Test
      public void HeapTestInsert() {
         setUp1();
