@@ -294,7 +294,7 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                 }else{
                     priorityTasks.insert(task.getPriority(), task);
                 }
-            }else if (action.getAction() == EnumAction.MODIFY1 && action.getAction() == EnumAction.MODIFY2 && action.getAction() == EnumAction.MODIFY3 && action.getAction() == EnumAction.MODIFY4){
+            }else if (action.getAction() == EnumAction.MODIFY1 || action.getAction() == EnumAction.MODIFY2 || action.getAction() == EnumAction.MODIFY3 || action.getAction() == EnumAction.MODIFY4){
 
                 if (action.getAction() == EnumAction.MODIFY1){
 
