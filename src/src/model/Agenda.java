@@ -125,7 +125,11 @@ public class Agenda<K,V, T extends  Comparable<T>> {
                     flag = true;
                     break;
                 case 4:
-                    undoStack.push(new Actions(EnumAction.MODIFY4, table.searchNode(position).getValue()));
+                    Task task = table.searchNode(position).getValue();
+                    if (task.getPriority() == 0){
+
+                    }
+                    undoStack.push(new Actions(EnumAction.MODIFY4, task));
                     ((Task) table.searchNode(position).getValue()).setPriority(priority);
                     if (nonPriorityTasks.verify((Task) table.searchNode(position).getValue())) {
                         try {
@@ -298,18 +302,18 @@ public class Agenda<K,V, T extends  Comparable<T>> {
 
                 if (action.getAction() == EnumAction.MODIFY1){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 1, task.getId(), task.getPriority());
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 1, task.getId(), action.getPriority());
 
                 }else if (action.getAction() == EnumAction.MODIFY2){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 2, task.getId(), task.getPriority());
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 2, task.getId(), action.getPriority());
 
                 }else if (action.getAction() == EnumAction.MODIFY3){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 3, task.getId(), task.getPriority());
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 3, task.getId(), action.getPriority());
                 }else if (action.getAction() == EnumAction.MODIFY4){
 
-                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 4, task.getId(), task.getPriority());
+                    modifyTask(task.getTitle(), task.getDescription(), task.getDate(), 4, task.getId(), action.getPriority());
                 }
 
             }
