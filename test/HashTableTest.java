@@ -1,4 +1,3 @@
-package test;
 import model.HashTable;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,3 @@
-package test;
 import exceptions.IndexOutOfBoundsException;
 import exceptions.ListIsNullException;
 import model.Heap;

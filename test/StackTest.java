@@ -1,4 +1,3 @@
-package test;
 import exceptions.ListIsNullException;
 import model.*;
 import org.junit.jupiter.api.Test;
